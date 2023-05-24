@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Tilt+Warp&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../css/matrix.css">
+        <link rel="icon" type="image/png" sizes="16x16" href="../favicon_cal/favicon-16x16.png">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <title>MATRIX CALCULATOR</title>
+    </head>
+    <body>
+        <main class="mainBox">
+            <header class="titleBox">
+                <h1 class="titleMatrix">MATRIX</h1>
+                <h1 class="titleCalculator">CALCULATOR</h1>
+            </header>
+            <section class="secTop">
+                <article class="inputBoxA">
+                    <h2 class="textA">A</h2>
+                    <div class="insertRowColumnA">
+                        <input id="aRow" class="" type="number" placeholder="ROW" min="0" max="7" maxlength="1" onkeypress="return funcCheck(event)" oninput="checkInputLength(this)">
+                        <input id="aColumn" type="number" placeholder="COLUMN" min="0" max="7" maxlength="1" onkeypress="return funcCheck(event)" oninput="checkInputLength(this)">
+                    </div>
+                    <div class="inputBtnBox">
+                        <button id="randomBtnA" class="randomBtn">Random</button>
+                        <button id="insertBtnA" class="insertBtn">직접입력</button>
+                    </div>
+                    <div id="printAreaA" class="printArea"></div>
+                </article>
+                <article class="inputBoxB">
+                    <h2 class="textB">B</h2>
+                    <div class="insertRowColumnB">
+                        <input id="bRow" type="number" placeholder="ROW" min="0" max="7" maxlength="1" onkeypress="return funcCheck(event)" oninput="checkInputLength(this)">
+                        <input id="bColumn" type="number" placeholder="COLUMN" min="0" max="7" maxlength="1" onkeypress="return funcCheck(event)" oninput="checkInputLength(this)">
+                    </div>
+                    <div class="inputBtnBox">
+                        <button id="randomBtnB" class="randomBtn">Random</button>
+                        <button id="insertBtnB" class="insertBtn">직접입력</button>
+                    </div>
+                    <div id="printAreaB" class="printArea"></div>
+                </article>
+                <article class="inputBoxC">
+                    <h2 class="textC">DISPLAY</h2>
+                    <div class="choiceBtnBox">
+                        <div class="cBoxTop">
+                            <div id="plusBtn" class="plusBtn">
+                                <img class="plusIcon" src="../images/plus_icon.png" alt="plus icon">
+                            </div>
+                            <div id="minusBtn" class="minusBtn">
+                                <img class="minusIcon" src="../images/minus_icon.png" alt="minus icon">
+                            </div>
+                        </div>
+                        <div class="cBoxBottom">
+                            <div id="multiBtn" class="multiBtn">
+                                <img class="multiIcon" src="../images/multi_icon.png" alt="multi icon">
+                            </div>
+                            <button id="resetBtn" class="resetBtn">Reset</button>
+                        </div>
+                    </div>
+                    <div id="printAreaC" class="printArea"></div>
+                </article>
+            </section>
+            <div id="modalMainBox" class="modalMainBox">
+                <div class="modalTop">ERROR</div>
+                <div id="modalMid" class="modalMid">
+                    <p id="modalMidText" class="modalMidText">1~7까지의 숫자를 입력해주세요.</p>
+                </div>
+                <div id="modalCloseBtn" class="modalBottom">CLOSE</div>
+            </div>
+        </main>
+        <script>
+            const printAreaA = document.getElementById("printAreaA");
+            const printAreaB = document.getElementById("printAreaB");
+            const printAreaC = document.getElementById("printAreaC");
+            let arrayA = [];
+            let arrayB = [];
+            let arrayC = [];
+            let arrayD = [];
+            const checkLength = /^[1-7]$/;
+            const checkMinus = /^[\-]/;
+
+            const checkInputLength = e => {
+                if(checkMinus.test(e.value)){
+                    if(e.value.length > e.maxLength){
+                        e.value = e.value.slice(0, e.maxLength+1);
+                    }
+                } else {
+                    if(e.value.length > e.maxLength){
+                        e.value = e.value.slice(0, e.maxLength);
+                    }
+                }
+            }
+            const funcCheck = event => {
+                if(event.key == 'e' || event.key == 'E' || event.key == '.' || event.key == '-' || event.key == '+'){ return false;}
+            }
+            const funcCheckE = event => {
+                if(event.key == 'e' || event.key == '.' || event.key == 'E'){ return false; }
+            }
+            
+            const modalOn = () => {
+                $("#modalMainBox").css("display", "block");
+            }
+            $("#modalCloseBtn").on("click", () => {
+                $("#modalMainBox").css("display", "none");
+            });
+            // 직접입력
+            $("#insertBtnA").on("click", () => {
+                printAreaA.innerHTML = "";
+                arrayC = [];
+                let aRow = $("#aRow").val();
+                let aColumn = $("#aColumn").val();
+                if(checkLength.test(aRow) && checkLength.test(aColumn)){
+                    for(let i=0; i<aRow; i++){
+                        for(let j=0; j<aColumn; j++){
+                            let makeBox = `<input id="printInputA${i}${j}" class="printInput" type="number" min="-99" max="99" maxlength="2" onkeypress="return funcCheckE(event)" oninput="checkInputLength(this)" value="0"/>`;
+                            printAreaA.innerHTML += makeBox;
+                        }
+                        printAreaA.innerHTML += '<br>';
+                    }
+                } else {
+                    $("#modalMidText").text("1~7까지의 숫자를 입력해주세요.");
+                    modalOn();
+                }
+            });
+            $("#insertBtnB").on("click", () => {
+                printAreaB.innerHTML = "";
+                arrayD = [];
+                let bRow = $("#bRow").val();
+                let bColumn = $("#bColumn").val();
+                if(checkLength.test(bRow) && checkLength.test(bColumn)){
+                    for(let i=0; i<bRow; i++){
+                        for(let j=0; j<bColumn; j++){
+                            let makeBox = `<input id="printInputB${i}${j}" class="printInput" type="number" min="-99" max="99" maxlength="2" onkeypress="return funcCheckE(event)" oninput="checkInputLength(this)" value="0"/>`;
+                            printAreaB.innerHTML += makeBox;
+                        }
+                        printAreaB.innerHTML += '<br>';
+                    }
+                } else {
+                    $("#modalMidText").text("1~7까지의 숫자를 입력해주세요.");
+                    modalOn();
+                }
+            });
+            // 랜덤 출력
+            $("#randomBtnA").on("click", () => {
+                printAreaA.innerHTML = "";
+                arrayC = [];
+                let aRow = $("#aRow").val();
+                let aColumn = $("#aColumn").val();
+                if(checkLength.test(aRow) && checkLength.test(aColumn)){
+                    for(let i=0; i<aRow; i++){
+                        arrayA = [];
+                        for(let j=0; j<aColumn; j++){
+                            let randomValue = Math.floor(Math.random() * (99-0+1)+0);
+                            arrayA.push(randomValue);
+                            let makeBox = `<input id="printInputA${i}${j}" class="printInput" type="number" min="-99" max="99" maxlength="2" onkeypress="return funcCheckE(event)" oninput="checkInputLength(this)" value="${randomValue}"/>`;
+                            printAreaA.innerHTML += makeBox;
+                        }
+                        arrayC.push(arrayA);
+                        printAreaA.innerHTML += '<br>';
+                    }
+                } else {
+                    $("#modalMidText").text("1~7까지의 숫자를 입력해주세요.");
+                    modalOn();
+                }
+            });
+            $("#randomBtnB").on("click", () => {
+                printAreaB.innerHTML = "";
+                arrayD = [];
+                let bRow = $("#bRow").val();
+                let bColumn = $("#bColumn").val();
+                if(checkLength.test(bRow) && checkLength.test(bColumn)){
+                    for(let i=0; i<bRow; i++){
+                        arrayB = [];
+                        for(let j=0; j<bColumn; j++){
+                            let randomValue = Math.floor(Math.random() * (99-0+1)+0);
+                            arrayB.push(randomValue);
+                            let makeBox = `<input id="printInputB${i}${j}" class="printInput" type="number" min="-99" max="99" maxlength="2" onkeypress="return funcCheckE(event)" oninput="checkInputLength(this)" value="${randomValue}"/>`;
+                            printAreaB.innerHTML += makeBox;
+                        }
+                        arrayD.push(arrayB);
+                        printAreaB.innerHTML += '<br>';
+                    }
+                } else {
+                    $("#modalMidText").text("1~7까지의 숫자를 입력해주세요.");
+                    modalOn();
+                }
+            });
+            // Reset 버튼
+            $("#resetBtn").on("click", () => {
+                printAreaA.innerHTML = "";
+                printAreaB.innerHTML = "";
+                printAreaC.innerHTML = "";
+                $("input").val("");
+            });
+            // Plus 버튼
+            $("#plusBtn").on("click", () => {
+                printAreaC.innerHTML = "";
+                let aRow = $("#aRow").val();
+                let aColumn = $("#aColumn").val();
+                let bRow = $("#bRow").val();
+                let bColumn = $("#bColumn").val();
+                arrayA = [];
+                arrayB = [];
+                arrayC = [];
+                arrayD = [];
+
+                if(aRow != bRow || bColumn != bColumn ){
+                    $("#modalMidText").text("행열의 숫자가 다릅니다.");
+                    modalOn();
+                } else {
+                    for(let i=0; i<aRow; i++){
+                        arrayA = [];
+                        arrayB = [];
+                        for(let j=0; j<aColumn; j++){
+                            let _tempNum1 = document.getElementById("printInputA"+i+j).value;
+                            arrayA.push(_tempNum1);
+                            let _tempNum2 = document.getElementById("printInputB"+i+j).value;
+                            arrayB.push(_tempNum2);
+                        }
+                        arrayC.push(arrayA);
+                        arrayD.push(arrayB);
+                    }
+                    for(let i=0; i<aRow; i++){
+                        for(let j=0; j<aColumn; j++){
+                            let _tempArray1 = Number(arrayC[i][j]) + Number(arrayD[i][j]);
+                            let makeBox = `<input id="printInputA${i}${j}" class="printInput" type="text" min="0" max="99" value="${_tempArray1}" readonly/>`;
+                            printAreaC.innerHTML += makeBox;
+                        }
+                        printAreaC.innerHTML += '<br>';
+                    }
+                }
+            });
+            // Minus 버튼
+            $("#minusBtn").on("click", () => {
+                printAreaC.innerHTML = "";
+                let aRow = $("#aRow").val();
+                let aColumn = $("#aColumn").val();
+                let bRow = $("#bRow").val();
+                let bColumn = $("#bColumn").val();
+                arrayA = [];
+                arrayB = [];
+                arrayC = [];
+                arrayD = [];
+
+                if(aRow != bRow || bColumn != bColumn){
+                    $("#modalMidText").text("행열의 숫자가 다릅니다.");
+                    modalOn();
+                } else {
+                    for(let i=0; i<aRow; i++){
+                        arrayA = [];
+                        arrayB = [];
+                        for(let j=0; j<aColumn; j++){
+                            let _tempNum1 = document.getElementById("printInputA"+i+j).value;
+                            arrayA.push(_tempNum1);
+                            let _tempNum2 = document.getElementById("printInputB"+i+j).value;
+                            arrayB.push(_tempNum2);
+                        }
+                        arrayC.push(arrayA);
+                        arrayD.push(arrayB);
+                    }
+                    for(let i=0; i<aRow; i++){
+                        for(let j=0; j<aColumn; j++){
+                            let _tempArray1 = Number(arrayC[i][j]) - Number(arrayD[i][j]);
+                            let makeBox = `<input id="printInputA${i}${j}" class="printInput" type="text" min="0" max="99" value="${_tempArray1}" readonly/>`;
+                            printAreaC.innerHTML += makeBox;
+                        }
+                        printAreaC.innerHTML += '<br>';
+                    }
+                }
+            });
+            // Multi 버튼
+            $("#multiBtn").on("click", () => {
+                printAreaC.innerHTML = "";
+                let aRow = $("#aRow").val();
+                let aColumn = $("#aColumn").val();
+                let bRow = $("#bRow").val();
+                let bColumn = $("#bColumn").val();
+                arrayA = [];
+                arrayB = [];
+                arrayC = [];
+                arrayD = [];
+
+                if(aColumn != bRow) {
+                    $("#modalMidText").text("A의 행과 B의 열 또는 A의 열과 B의 행에 같은 숫자를 입력해주세요");
+                    modalOn();
+                } else if(aRow == aColumn && bRow == bColumn){
+                    for(let i=0; i<aRow; i++){
+                        arrayA = [];
+                        arrayB = [];
+                        for(let j=0; j<aColumn; j++){
+                            let _tempNum1 = document.getElementById("printInputA"+i+j).value;
+                            arrayA.push(_tempNum1);
+                            let _tempNum2 = document.getElementById("printInputB"+i+j).value;
+                            arrayB.push(_tempNum2);
+                        }
+                        arrayC.push(arrayA);
+                        arrayD.push(arrayB);
+                    }
+                } else if(aColumn == bRow) {
+                        for(let i=0; i<aRow; i++){
+                            arrayA = [];
+                            for(let j=0; j<aColumn; j++){
+                                let _tempNum1 = document.getElementById("printInputA"+i+j).value;
+                                arrayA.push(_tempNum1);
+                                //console.log(_tempNum1);
+                            }
+                            arrayC.push(arrayA);
+                        }
+                        for(let i=0; i<bRow; i++){
+                            arrayB = [];
+                            for(let j=0; j<bColumn; j++){
+                                let _tempNum2 = document.getElementById("printInputB"+i+j).value;
+                                arrayB.push(_tempNum2);
+                            }
+                            arrayD.push(arrayB);
+                        }
+                } else {
+                    $("#modalMidText").text("A의 열과 B의 행에 같은 숫자를 입력해주세요");
+                    modalOn();
+                }
+                let multiValue = 0;
+                let _tempArray1 = [];
+                let printString = "";
+                if(aRow == aColumn && bColumn == bRow){
+                    for(let i=0; i<aRow; i++){
+                        _tempArray1 = [];
+                        for(let j=0; j<aColumn; j++){
+                            _tempArray1 = [];
+                            for(let k=0; k<bColumn; k++){
+                                multiValue += Number(arrayC[i][k]) * Number(arrayD[k][j]);
+                            }
+                            _tempArray1.push(multiValue);
+                            let printDot1 = "";
+                            let printDot2 = [];
+                            let printDot3 = [];
+                            for(let i=0; i<_tempArray1.length; i++){
+                                printDot1 += _tempArray1;
+                            }
+                            printDot2 = [...printDot1];
+                            loopCount = printDot2.length;
+                            for(let i=0; i<loopCount; i++){
+                                if(printDot2[0] == '-'){
+                                    if(loopCount > 4){
+                                        if(i % 3 == 0 && i != 0){
+                                        printDot3.unshift(',');
+                                        }
+                                    }
+                                } else {
+                                    if(i % 3 == 0 && i != 0){
+                                        printDot3.unshift(',');
+                                    }
+                                }
+                                printDot3.unshift(printDot2.pop());
+                            }
+                            for(let i=0; i<printDot3.length; i++){
+                                printString += printDot3[i];
+                            }
+                            multiValue = 0;
+                            let makeBox = `<input id="printInputA${i}${j}" class="printInput" type="text" min="0" max="99" value="${printString}" readonly/>`;
+                            printAreaC.innerHTML += makeBox;
+                            printString = "";
+                        }
+                        printAreaC.innerHTML += '<br>';
+                    }
+                } else if( aColumn == bRow){
+                    for(let i=0; i<aRow; i++){
+                        _tempArray1 = [];
+                        for(let j=0; j<bColumn; j++){
+                            _tempArray1 = [];
+                            for(let k=0; k<bRow; k++){
+                                multiValue += Number(arrayC[i][k]) * Number(arrayD[k][j]);
+                            }
+                            _tempArray1.push(multiValue);
+                            let printDot1 = "";
+                            let printDot2 = [];
+                            let printDot3 = [];
+                            for(let i=0; i<_tempArray1.length; i++){
+                                printDot1 += _tempArray1;
+                            }
+                            printDot2 = [...printDot1];
+                            loopCount = printDot2.length;
+                            for(let i=0; i<loopCount; i++){
+                                if(printDot2[0] == '-'){
+                                    if(loopCount > 4){
+                                        if(i % 3 == 0 && i != 0){
+                                        printDot3.unshift(',');
+                                        }
+                                    }
+                                } else {
+                                    if(i % 3 == 0 && i != 0){
+                                        printDot3.unshift(',');
+                                    }
+                                }
+                                printDot3.unshift(printDot2.pop());
+                            }
+                            for(let i=0; i<printDot3.length; i++){
+                                printString += printDot3[i];
+                            }
+                            multiValue = 0;
+                            let makeBox = `<input id="printInputA${i}${j}" class="printInput" type="text" min="0" max="99" value="${printString}" readonly/>`;
+                            printAreaC.innerHTML += makeBox;
+                            printString = "";
+                        }
+                        printAreaC.innerHTML += '<br>';
+                    }
+                } else {
+                    $("#modalMidText").text("A의 열과 B의 행에 같은 숫자를 입력해주세요");
+                    modalOn();
+                }
+            });
+        </script>
+    </body>
+</html>
