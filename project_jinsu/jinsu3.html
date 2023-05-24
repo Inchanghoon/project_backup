@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8">
+		<title>JINSU PORTFOLIO</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+		<link rel="icon" type="image/png" sizes="16x16" href="./Favicon/favicon_io/favicon-16x16.png">
+		<!--<link rel="manifest" href="/site.webmanifest">-->
+		<style>
+			*{ margin:0; padding:0; font-family:'Nanum Gothic',sans-serif; color:#333; font-size:10px; }
+			.mainBox{
+				width: 120rem; height: 95rem;
+				position: absolute; top: 1rem; left: 50%;
+				background-color: #df3636;
+				transform: translate(-50%, 0%);
+				box-shadow: 0rem 0rem 0.2rem 0.2rem #f9f1e5;
+				border-radius: 1.5rem;
+			}
+			.monitor{
+				width: 115rem; height: 90rem;
+				background-color: #df3636;
+				margin: 2rem 0 0 2.5rem;
+				border-radius: 1rem;
+			}
+			.aBox{
+				width: 115rem; height: 10rem;
+				display: inline-block;
+				text-align: center;
+				background: #c2ff92;
+				padding-top: 4rem;
+				line-height: 10rem;
+				border-radius: 1.5rem 1.5rem 0 0;
+			}
+			.inputBox{
+				width: 25rem; height: 7rem;
+				text-align: center;
+				border-radius: 1.5rem;
+				font-size: 2.5rem;
+				line-height: 20rem;
+				letter-spacing: 0.5rem;
+				box-shadow: 0 0 0.2rem 0.2rem #edd600;
+				border: 0rem solid #edd600;
+			}
+			.printBox{
+				width: 60rem; height: 5rem;
+				font-size: 2rem;
+				border-radius: 1rem;
+				letter-spacing: 0.2rem;
+				word-spacing: 0.2rem;
+				margin-top: 2rem;
+				box-shadow: 0rem 0rem 0.2rem 0.2rem #edd600;
+				border: 0rem solid #606060;
+				display: inline-block;
+				line-height: 5rem;
+			}
+			.cBox{
+				width: 115rem; height: 35rem;
+				display: inline-block;
+				padding-top: 4rem;
+				text-align: center;
+				background-color: #c2ff92;
+				border-radius: 0 0 1.5rem 1.5rem;
+			}
+			.cBoxLine{
+				width: 100rem; height: 34rem;
+				border: 0.3rem dashed orange;
+				line-height: 7rem;
+				margin-left: 7rem;
+				margin-top: -2rem;
+				border-radius: 1.5rem;
+			}
+			.bottomLeftBox{
+				width: 45rem; height: 36rem;
+				/*display: inline-block; */
+				float: left;
+				background-color: #df3636;
+				border-radius: 1rem 0 0 1rem;
+				margin-top: 4rem;
+				clear: left;
+			}
+			.moveOutside{
+				width: 26rem; height: 26rem;
+				border-radius: 50%;
+				margin: 4.5rem 0 0 11rem;
+				box-shadow: 0 0 0.3rem 0.3rem #222;
+				background-color: #eee;
+			}
+			.moveBtn1{
+				width: 21rem; height: 7rem;
+				background-color: tomato;
+				position: absolute;
+				top: 73rem; left: 16rem;
+				box-shadow: 0 0 0.2rem 0.3rem #222;
+			}
+			.moveBtn2{
+				width: 7rem; height: 21rem;
+				background-color: tomato;
+				position: absolute;
+				top: 66rem; left: 23rem;
+				box-shadow: 0 0 0.2rem 0.3rem #222;
+			}
+			.moveBox3{
+				width: 8rem; height: 7rem;
+				background-color: tomato;
+				position: absolute;
+				top: 73rem; left: 22.5rem;
+				text-align: center;
+				font-size: 2.5rem;
+				line-height: 7rem;
+				cursor: pointer;
+			}
+			.moveBox3:hover{ color: #111; }
+			.moveBox3:active{ color: #ddc914; }
+			.buttonArrowTop,.buttonArrowLeft,.buttonArrowRight,.buttonArrowBottom{
+				width: 0rem; height: 0rem;
+				border-top: 3rem solid transparent;
+				border-right: 3rem solid transparent;
+				border-bottom: 4rem solid gold;
+				border-left: 3rem solid transparent;
+				position: absolute;
+				top: 64rem; left: 23.5rem;
+			}
+			.buttonArrowLeft{
+				border-bottom: 3rem solid transparent;
+				border-right: 4rem solid gold;
+				top: 73.5rem; left: 14rem;
+			}
+			.buttonArrowRight{
+				border-bottom: 3rem solid transparent;
+				border-left: 4rem solid gold;
+				top: 73.5rem; left: 32rem;
+			}
+			.buttonArrowBottom{
+				border-bottom: 3rem solid transparent;
+				border-top: 4rem solid gold;
+				top: 82rem; left: 23.5rem;
+			}
+			.bottomRightBox{
+				width: 70rem; height: 36rem;
+				display: inline-block;
+				background-color: #df3636;
+				border-radius: 0 1rem 1rem 0;
+			}
+			.smallButtonBox{
+				width: 30rem; height: 36rem;
+				position: absolute;
+				top: 57rem; left: 42rem;
+				display: none;
+			}
+			.bottomTextBox{
+				width: 30rem; height: 12rem;
+			}
+			.infoJinsuText{
+				width: 25rem; height: 10rem;
+				border: 0.3rem dashed #eee;
+				border-radius: 1.5rem;
+				text-align: center;
+				line-height: 10rem;
+				font-size: 3rem;
+				letter-spacing: 0.3rem;
+				margin: 6rem 0 0 2rem;
+			}
+			.bottomArrowBox{
+				width: 30rem; height: 15rem;
+			}
+			.midArrow1{
+				width: 20rem; height: 4rem;
+				background-color: #ddc914;
+				position: absolute;
+				top: 22rem; left: 3rem;
+			}
+			.midArrow2{
+				border-top: 4rem solid transparent;
+				border-left: 4rem solid #ddc914;
+				border-right: 4rem solid transparent;
+				border-bottom: 4rem solid transparent;
+				position: absolute;
+				top: 20rem; left: 23rem;
+			}
+			.changeText{
+				text-align: center;
+				font-size: 2.5rem;
+				letter-spacing: 0.2rem;
+				word-spacing: 0.2rem;
+				padding: 1rem 0 1rem 0;
+				border: 0.3rem dashed #ddc914;
+			}
+			.outsideBtn2{
+				width: 17rem; height: 7rem;
+				border-radius: 1.5rem;
+				background-color: #ddc914;
+				margin: 2rem 0 0 6.5em;
+				display: inline-block;
+				cursor: pointer;
+				box-shadow: 0 0 0.2rem 0.2rem #ddc914;
+			}
+			.insideBtn2{
+				width: 16rem; height: 6rem;
+				border-radius: 1.5rem;
+				background-color: tomato;
+				font-size: 2.5rem;
+				line-height: 6rem;
+				margin: 0.5rem 0 0 0.5rem;
+				display: inline-block;
+				box-shadow: 0 0 0.2rem 0.2rem #444;
+				transition: all linear 0.2s;
+				text-align: center;
+				letter-spacing: 0.3rem;
+
+			}
+			.insideBtn2:hover{ background-color: #e15941; color: #ddc914; }
+			.insideBtn2:active{ box-shadow: 0 0 0.5rem 0.5rem #444; }
+			.buttonBox{
+				width: 50rem; height: 36rem;
+				display: inline-block;
+				margin: 4rem 0 0 25rem;
+			}
+			.outsideBtn{
+				width: 13rem; height: 13rem;
+				border-radius: 50%;
+				background-color: #ddc914;
+				display: inline-block;
+				margin: 3rem 0 0 6rem;
+				cursor: pointer;
+				box-shadow: 0 0 0.2rem 0.2rem #ddc914;
+			}
+			.insideBtn{
+				width: 11rem; height: 11rem;
+				border-radius: 50%;
+				background-color: tomato;
+				font-size: 2.5rem;
+				display: inline-block;
+				text-align: center;
+				line-height: 11rem;
+				margin: 1rem 0 0 1rem;
+				box-shadow: 0 0 0.2rem 0.3rem #444;
+				transition: all linear 0.2s;
+			}
+			.insideBtn:hover{ background-color: #e15941; color: #ddc914; }
+			.insideBtn:active{ box-shadow: 0 0 0.5rem 0.5rem #444; }
+			.modalMainBox{
+				width: 30rem; height: 20rem;
+				background-color: white;
+				position: absolute;
+				top: -90%; left: 10%;
+				border-radius: 1.5rem;
+				box-shadow: 0 0 0.2rem 0.2rem #444;
+				display: none;
+			}
+			.modalTop{
+				width: 30rem; height: 5rem;
+				border-bottom: 0.1rem solid #333;
+				text-align: center;
+				font-size: 2rem;
+				line-height: 5rem;
+				padding: 0.2rem 0 0.2rem 0;
+			}
+			.closeBox{
+				width: 2.2rem; height: 2.2rem;
+				position: absolute;
+				top: 0.8rem; left: 26rem;
+				font-size: 1.6rem;
+				text-align: center;
+				line-height: 2.2rem;
+				box-shadow: 0 0 0.1rem 0.1rem #444;
+				cursor: pointer;
+				transition: all linear 0.2s;
+			}
+			.closeBox:hover{ box-shadow: 0 0 0.1rem 0.1rem #777; color: #777}
+			.modalHeadText { font-size: 3rem; letter-spacing: 0.5rem; }
+			.modalMid{ width: 30rem; height: 8.5rem; border-bottom: 0.1rem solid #333; }
+			.modalMidText{
+				text-align: center;
+				font-size: 1.6rem;
+				line-height: 8.5rem;
+				letter-spacing: 0.1rem;
+			}
+			.bottomCloseBox{
+				width: 30rem; height: 5.9rem;
+				background-color: #ededf9;
+				text-align: center;
+				line-height: 6rem;
+				font-size: 2.5rem;
+				border-radius: 0 0 0.75rem 0.75rem;
+				letter-spacing: 0.5rem;
+				border-radius: 0 0 1.5rem 1.5rem;
+				cursor: pointer;
+				transition: all linear 0.2s;
+			}
+			.bottomCloseBox:hover{ background-color: #dfdfeb; }
+			.arrowTwo,.arrowEight,.arrowTen,.arrowSixteen{
+				width: 5rem; height: 5rem;
+				font-size: 2.5rem;
+				text-align: center;
+				line-height: 6rem;
+				position: absolute;
+				cursor: pointer;
+			}
+			.arrowTwo{ top: -0.5rem; left: -2.5rem;	}
+			.arrowEight{ top: -3rem; }
+			.arrowTen{ top: -12.5rem; left: 4.5rem; z-index: 1; }
+			.arrowSixteen{ top: 4rem; left: -12rem; }
+		</style>
+	</head>
+	<body>
+		<main class="mainBox">
+			<section class="monitor">
+				<section class="aBox">
+					<input id="inputNum" class="inputBox" type="text" maxlength="10" placeholder="숫자입력">
+				</section>
+				<section class="cBox">
+					<div class="cBoxLine">
+						<p id="printTen" class="printBox">10진수 숫자출력</p>
+						<p id="printTwo" class="printBox">2진수 숫자출력</p>
+						<p id="printEight" class="printBox">8진수 숫자출력</p>
+						<p id="printSixteen" class="printBox">16진수 숫자출력</p>
+					</div>
+				</section>
+				<section class="bottomLeftBox">
+					<div class="moveOutside">
+						<div class="moveBtn1"></div>
+						<div class="moveBtn2"></div>
+						<div id="resetBtn" class="moveBox3">RESET</div>
+						<div class="buttonArrowTop"><div id="changeTwo" class="arrowTwo">2</div></div>
+						<div class="buttonArrowLeft"><div id="changeEight" class="arrowEight">8</div></div>
+						<div class="buttonArrowBottom"><div id="changeTen" class="arrowTen">10</div></div>
+						<div class="buttonArrowRight"><div id="changeSixteen" class="arrowSixteen">16</div></div>
+					</div>
+				</section>
+				<section class="bottomRightBox">
+					<div class="buttonBox">
+						<div class="outsideBtn outBtn2">
+							<div id="twoJinsuBtn" class="insideBtn">2진수</div>
+						</div>
+						<div class="outsideBtn outBtn3">
+							<div id="eightJinsuBtn" class="insideBtn">8진수</div>
+						</div>
+						<div class="outsideBtn outBtn5">
+							<div id="tenJinsuBtn" class="insideBtn">10진수</div>
+						</div>
+						<div class="outsideBtn outBtn6">
+							<div id="sixteenJinsuBtn" class="insideBtn">16진수</div>
+						</div>
+					</div>
+					<div id="smallButtonBox" class="smallButtonBox">
+						<div class="bottomTextBox">
+							<p id="infoJinsuText" class="infoJinsuText"></p>
+						</div>
+						<div class="bottomArrowBox">
+							<div class="midArrow1"></div>
+							<div class="midArrow2"></div>
+						</div>
+						<div id="modal" class="modalMainBox">
+							<div class="modalTop">
+								<h1 class="modalHeadText">입력오류</h1>
+								<div id="closeBox" class="closeBox">X</div>
+							</div>
+							<div class="modalMid">
+								<p id="modalMidText" class="modalMidText"></p>
+							</div>
+							<div class="modalBottom">
+								<div id="closeBox2" class="bottomCloseBox">CLOSE</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</section>
+		</main>
+		<script>
+			let inputNum = document.getElementById('inputNum');
+			let printTen = document.getElementById('printTen');
+			let printTwo = document.getElementById('printTwo');
+			let printEight = document.getElementById('printEight');
+			let printSixteen = document.getElementById('printSixteen');
+			let smallButtonBox = document.getElementById('smallButtonBox');
+			let infoJinsuText = document.getElementById('infoJinsuText');
+
+			let printWhatJinsu = () => {
+				smallButtonBox.style.display = "block"; 
+			}
+
+			//  10진수를 2진수로 변경하는 함수
+			let tenToTwo = (tenCalNum) => {
+				let printArray = [];
+				while( tenCalNum > 0 ){
+					if(tenCalNum % 2 < 2){
+						printArray.unshift(tenCalNum % 2);
+					}
+					tenCalNum = Math.floor( tenCalNum / 2 );
+				}
+				return printArray;
+			}
+
+			// 10진수를 8진수로 변경하는 함수
+			let tenToEight=(tenCalNum)=>{
+				let printArray = [];
+				while( tenCalNum > 0 ){
+					if( tenCalNum % 8 < 8 ){
+						printArray.unshift( tenCalNum % 8 );
+					}
+					tenCalNum = Math.floor(tenCalNum / 8);
+				}
+				return printArray;
+			}
+
+			// 10진수를 16진수로 변경하는 함수
+			let tenToSixteen = (tenCalNum) =>{
+				let printArray = [];
+				while(tenCalNum > 0){
+					if(tenCalNum % 16 < 10){
+						printArray.unshift(tenCalNum % 16);
+					} else if(tenCalNum % 16 == 10){
+						printArray.unshift('a');
+					} else if(tenCalNum % 16 == 11){
+						printArray.unshift('b');
+					} else if(tenCalNum % 16 == 12){
+						printArray.unshift('c');
+					} else if(tenCalNum % 16 == 13){
+						printArray.unshift('d');
+					} else if(tenCalNum % 16 == 14){
+						printArray.unshift('e');
+					} else if(tenCalNum % 16 == 15){
+						printArray.unshift('f');
+					}
+					tenCalNum = Math.floor(tenCalNum / 16);
+				}
+				return printArray;
+			}
+
+			// 오류가 있을 때 모달창 출력
+			let modal = document.getElementById('modal');
+			let closeBox = document.getElementById('closeBox');
+			let modalMidText = document.getElementById('modalMidText');
+			let modalOn = () => {
+				printTwo.innerHTML = "2진수 숫자출력";
+				printEight.innerHTML = "8진수 숫자출력";
+				printTen.innerHTML = "10진수 숫자출력";
+				printSixteen.innerHTML = "16진수 숫자출력";
+				modal.style.display = "block";
+			}
+			closeBox.addEventListener("click", ()=>{
+				modal.style.display = "none";
+			});
+
+			document.getElementById("closeBox2").addEventListener("click", ()=>{
+				modal.style.display = "none";
+			});
+
+			// 콤마 없애고 출력
+			let removeComma = (printArray) =>{
+				let removePrint = "";
+				for(let i=0; i<printArray.length; i++){
+					removePrint += String(printArray[i]);
+				}
+				return removePrint;
+			}
+			// 입력창에 공백 체크
+			let emptyCheck = () => {
+				let inputBox = document.getElementById('inputNum').value;
+				let checkEmpty = /\s+/g;
+				if(inputBox == checkEmpty){
+					modalOn();
+					modalMidText.innerHTML = "숫자를 입력해주세요.";
+					return false;
+				}
+			}
+			// 10진수 버튼을 눌렀을때 이벤트 발생
+			let funcCalTenJinsu=()=>{
+				let inputNumTen = document.getElementById('inputNum').value;
+				let checkNum = /[a-zA-Z]+/ig;
+				let checkLength = /[0-9]{11}/ig;
+				let checkInput = () => {
+					if(checkNum.test(inputNumTen)){
+						modalMidText.innerHTML = "숫자만 입력하세요.";
+						inputNumTen = "";
+						inputNum.value = "";
+						modalOn();
+						return false;
+					}
+					/*if(checkLength.test(inputNumTen.value)){
+						modalMidText.innerHTML = "10자리까지의 숫자만 입력하세요.";
+						modalOn();
+						inputNumTen.value = "";
+						return false;
+					}*/
+				}
+				document.getElementById("twoJinsuBtn").addEventListener("click", ()=>{
+					if( emptyCheck() != false ){
+						if( checkInput() != false){
+							let tenCalNum = 0;
+							let printArray = [];
+							tenCalNum = inputNumTen;
+							let funcCal = tenToTwo(tenCalNum);
+							printArray = [...funcCal];
+							printTwo.innerHTML = removeComma(printArray);
+						}
+					}
+				});
+				document.getElementById("eightJinsuBtn").addEventListener("click", () => {
+					if( emptyCheck() != false ){
+						if( checkInput() != false ){
+							let tenCalNum = 0;
+							let printArray = [];
+							tenCalNum = parseInt(inputNumTen);
+							let funcCal = tenToEight(tenCalNum);
+							printArray = [...funcCal];
+							printEight.innerHTML = removeComma(printArray);
+						}
+					}
+				});
+				document.getElementById("tenJinsuBtn").addEventListener("click", ()=>{
+					if( emptyCheck() != false ){
+						if(checkInput() != false){
+							printTen.innerHTML = inputNumTen;
+						}
+					}
+				});
+				document.getElementById("sixteenJinsuBtn").addEventListener("click", () => {
+					if( emptyCheck() != false ){
+						if( checkInput() != false ){
+							let numValue = 0;
+							let printArray = [];
+							numValue = parseInt(inputNumTen);
+							let calFunc = tenToSixteen(numValue);
+							printArray = [...calFunc];
+							printSixteen.innerHTML = removeComma(printArray);
+						}
+					}
+				});
+			}
+
+			// 리셋 버튼을 눌렀을때 창 리셋
+			document.getElementById("resetBtn").addEventListener("click", () => {
+				funcReset();
+			});
+			// 리셋 함수
+			let funcReset = () => {
+				//inputNum.setAttribute("id", "inputNum");
+				printTwo.innerHTML = "2진수 숫자출력";
+				printEight.innerHTML = "8진수 숫자출력";
+				printTen.innerHTML = "10진수 숫자출력";
+				printSixteen.innerHTML = "16진수 숫자출력";
+				inputNum.value = "";
+				smallButtonBox.style.display = "none";
+			}
+
+			// 2진수 변환 오류 체크
+			let funcCalTwoJinsu = () => {
+				let inputNumTwo = document.getElementById('inputNum').value;
+				let checkNum = /[a-zA-Z2-9\D\s]+/ig;
+				let checkLength = /[01]{11}/ig;
+				let checkInput = () => {
+					if(checkNum.test(inputNumTwo)){
+						modalMidText.innerHTML = "2진수를 입력하세요.";
+						modalOn();
+						inputNumTwo = "";
+						inputNum.value = "";
+						return false;
+					}
+					/*if(checkLength.test(inputNumTwo.value)){
+						modalMidText.innerHTML = "10자리까지의 숫자만 입력하세요.";
+						modalOn();
+						inputNumTwo.value = "";
+						return false;
+					}*/
+				}
+
+				// 2진수를 10진수로 변경하는 함수
+				let twoToTen=()=>{
+					let numValue = 0;
+					let copyArray1 = [];
+					let copyArray2 = [];
+					let loopCount = 0;
+					let tenCalNum = 0;
+					let calArray = [];
+					numValue = inputNumTwo;
+					copyArray1 = [...numValue];
+					loopCount = copyArray1.length;
+
+					for( let i=0; i<loopCount; i++ ){
+						copyArray2.push(copyArray1.pop());
+					}
+					for( let i=0; i<loopCount; i++){
+						calArray.push(copyArray2[i] * (Math.pow( 2,i)));
+					}
+					for(let i=0; i<loopCount; i++){
+						tenCalNum += calArray[i];
+					}
+					return tenCalNum;
+				}
+
+				document.getElementById("twoJinsuBtn").addEventListener("click", ()=>{
+					if( emptyCheck() != false ){
+						if(checkInput() != false){
+							let printArray = [];
+							printArray = [...inputNumTwo];
+							printTwo.innerHTML = removeComma(printArray);
+						}
+					}
+				});
+				document.getElementById("eightJinsuBtn").addEventListener("click", ()=>{
+					if( emptyCheck() != false ){
+						if(checkInput() != false){
+							let printArray = [];
+							let tenCalNum = 0;
+							tenCalNum = twoToTen();
+							let calFunc = tenToEight(tenCalNum);
+							printArray = [...calFunc];
+							printEight.innerHTML = removeComma(printArray);
+						}
+					}
+				});
+				document.getElementById("tenJinsuBtn").addEventListener("click", ()=>{
+					if( emptyCheck() != false ){
+						if(checkInput() != false){
+							let printArray = twoToTen();
+							printTen.innerHTML = printArray;
+						}
+					}
+				});
+				document.getElementById("sixteenJinsuBtn").addEventListener("click", ()=>{
+					if( emptyCheck() != false ){
+						if(checkInput() != false){
+							let printArray = [];
+							let tenCalNum = 0;
+							tenCalNum = twoToTen();
+							let calFunc = tenToSixteen(tenCalNum);
+							printArray = [...calFunc];
+							printSixteen.innerHTML = removeComma(printArray);
+						}
+					}
+				});
+			}
+			let funcCalEightJinsu = () => {
+				let inputNumEight = document.getElementById('inputNum').value;
+				// 8진수 오류 체크
+				let checkNum = /[a-zA-Z9\D\s]+/ig;
+				let checkLength = /[\d]{11}/ig;
+				let checkInput = () => {
+					if(checkNum.test(inputNumEight)){
+						modalMidText.innerHTML = '8진수를 입력하세요';
+						modalOn();
+						inputNumEight = "";
+						inputNum.value = "";
+						return false;
+					}
+					/*if(checkLength.test(inputNumEight.value)){
+						modalMidText.innerHTML = "10자리까지의 숫자만 입력하세요.";
+						modalOn();
+						inputNumEight.value = "";
+						return false;
+					}*/
+				}
+
+				// 8진수를 10진수로 변경하는 함수
+				let eightToTen=()=>{
+					let tenCalNum = 0;
+					let numValue = 0;
+					let copyArray1 = [];
+					let copyArray2 = [];
+					let loopCount = 0;
+					let calArray = [];
+
+					numValue = inputNumEight;
+					copyArray1 = [...numValue];
+					loopCount = copyArray1.length;
+					for(let i=0; i<loopCount; i++){
+						copyArray2.push(copyArray1.pop());
+					}
+					for(let i=0; i<loopCount; i++){
+						calArray.push(copyArray2[i] * (Math.pow(8, i)));
+					}
+					for(let i=0; i<loopCount; i++){
+						tenCalNum += calArray[i];
+					}
+					return tenCalNum;
+				}
+
+				document.getElementById("twoJinsuBtn").addEventListener("click", ()=>{
+					if( emptyCheck() != false ){
+						if(checkInput() != false ){
+							let tenCalNum = 0;
+							let printArray = [];
+							tenCalNum = eightToTen();
+							let funcCal = tenToTwo(tenCalNum);
+							printArray = [...funcCal];
+							printTwo.innerHTML = removeComma(printArray);
+						}
+					}
+				});
+				document.getElementById("eightJinsuBtn").addEventListener("click", ()=>{
+					if( emptyCheck() != false ){
+						if(checkInput() != false){
+							let printArray = [];
+							printArray = [...inputNumEight];
+							printEight.innerHTML = removeComma(printArray);
+						}
+					}
+				});
+				document.getElementById("tenJinsuBtn").addEventListener("click", ()=>{
+					if( emptyCheck() != false){
+						if(checkInput() != false){
+							let tenCalNum = eightToTen();
+							printTen.innerHTML = tenCalNum;
+						}
+					}
+				});
+				document.getElementById("sixteenJinsuBtn").addEventListener("click", ()=>{
+					if( emptyCheck() != false ){
+						if(checkInput() != false){
+							let printArray = [];
+							let tenCalNum = eightToTen();
+							let aaa = tenToSixteen(tenCalNum);
+							printArray = [...aaa];
+							printSixteen.innerHTML = removeComma(printArray);
+						}
+					}
+				});
+			}
+			
+			let funcCalSixteenJinsu = () => {
+				let inputNumSixteen = document.getElementById('inputNum').value;
+				// 16진수 오류 체크
+				let checkNum = /[g-zG-Z\W\s]+/ig;
+				let checkLength = /[\w]{11}/ig;
+				let checkInput = () => {
+					if(checkNum.test(inputNumSixteen)){
+						modalMidText.innerHTML = '16진수를 입력하세요.';
+						modalOn();
+						inputNumSixteen = "";
+						inputNum.value = "";
+						return false;
+					}
+					/*if(checkLength.test(inputNumSixteen)){
+						modalMidText.innerHTML = "10자리까지의 숫자, 문자를 입력하세요.";
+						modalOn();
+						inputNumSixteen.value = "";
+						return false;
+					}*/
+				}
+
+				// 16진수를 10진수로 변경하는 함수
+				let sixteenToTen = () => {
+					let numValue = 0;
+					let copyArray1 = [];
+					let copyArray2 = [];
+					let loopCount = 0;
+					let tenCalNum = 0;
+					let calArray = [];
+					numValue = inputNumSixteen;
+					copyArray1 = [...numValue];
+					loopCount = copyArray1.length;
+					
+					for(let i=0; i<loopCount; i++){
+						if(copyArray1[i] == 'a'){
+							copyArray1.splice(i, 1, 10);
+						} else if(copyArray1[i] == 'b'){
+							copyArray1.splice(i, 1, 11);
+						} else if(copyArray1[i] == 'c'){
+							copyArray1.splice(i, 1, 12);
+						} else if(copyArray1[i] == 'd'){
+							copyArray1.splice(i, 1, 13);
+						} else if(copyArray1[i] == 'e'){
+							copyArray1.splice(i, 1, 14);
+						} else if(copyArray1[i] == 'f'){
+							copyArray1.splice(i, 1, 15);
+						}
+					}
+					for(let i=0; i<loopCount; i++){
+						copyArray2.push(copyArray1.pop());
+					}
+					for(let i=0; i<loopCount; i++){
+						calArray.push(copyArray2[i] * (Math.pow(16,i)))
+					}
+					for(let i=0; i<loopCount; i++){
+						tenCalNum += calArray[i];
+					}
+					return tenCalNum;
+				}
+				document.getElementById('twoJinsuBtn').addEventListener("click", ()=>{
+					if( emptyCheck() != false ){
+						if(checkInput() != false){
+							let printArray = [];
+							let tenCalNum = 0;
+							tenCalNum = sixteenToTen();
+							let funcCal = tenToTwo(tenCalNum);
+							printArray = [...funcCal];
+							printTwo.innerHTML = removeComma(printArray);
+						}
+					}
+				});
+				document.getElementById('eightJinsuBtn').addEventListener("click", ()=>{
+					if( emptyCheck() != false){
+						if(checkInput() != false){
+							let printArray = [];
+							let tenCalNum = 0;
+							tenCalNum = sixteenToTen();
+							let funcCal = tenToEight(tenCalNum);
+							printArray = [...funcCal];
+							printEight.innerHTML = removeComma(printArray);
+						}
+					}
+				});
+				document.getElementById('tenJinsuBtn').addEventListener("click", ()=>{
+					if( emptyCheck() != false){
+						if(checkInput() != false){
+							let tenCalNum = 0;
+							tenCalNum = sixteenToTen();
+							printTen.innerHTML = tenCalNum;
+						}
+					}
+				});
+				document.getElementById('sixteenJinsuBtn').addEventListener("click", ()=>{
+					if(emptyCheck() != false){
+						if(checkInput() != false){
+							let printArray = [];
+							printArray = [...inputNumSixteen];
+							printSixteen.innerHTML = removeComma(printArray);
+						}
+					}
+				});
+			}
+			// 2진수 입력 버튼 누르면 입력창 2진수 용으로 변경
+			document.getElementById("changeTwo").addEventListener("click", () => {
+				//inputNum.setAttribute("id", "inputNumTwo");
+				printWhatJinsu();
+				infoJinsuText.innerHTML = "2진수 변환";
+				funcCalTwoJinsu();
+			});
+			// 8진수 입력 버튼 누르면 입력창 8진수 용으로 변경
+			document.getElementById("changeEight").addEventListener("click", ()=>{
+				//inputNum.setAttribute("id", "inputNumEight");
+				printWhatJinsu();
+				infoJinsuText.innerHTML = "8진수 변환";
+				funcCalEightJinsu();
+			});
+			// 10진수 입력 버튼
+			document.getElementById("changeTen").addEventListener("click", ()=>{
+				//inputNum.setAttribute("id", "inputNumTen");
+				printWhatJinsu();
+				infoJinsuText.innerHTML = "10진수 변환"
+				funcCalTenJinsu();
+			});
+			// 16진수 입력 버튼
+			document.getElementById("changeSixteen").addEventListener("click", ()=>{
+				//inputNum.setAttribute("id", "inputNumSixteen");
+				printWhatJinsu();
+				infoJinsuText.innerHTML = "16진수 변환";
+				funcCalSixteenJinsu();
+			});
+			// 입력창을 눌렀을때 값 초기화
+			document.getElementById("inputNum").addEventListener("click", ()=>{
+				inputNum.value = "";
+				printTwo.innerHTML = "2진수 숫자출력";
+				printEight.innerHTML = "8진수 숫자출력";
+				printTen.innerHTML = "10진수 숫자출력";
+				printSixteen.innerHTML = "16진수 숫자출력";
+			});
+			
+		</script>
+	</body>
+</html>

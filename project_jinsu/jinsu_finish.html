@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8">
+		<title>JINSU PORTFOLIO</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+		<link rel="icon" type="image/png" sizes="16x16" href="./Favicon/favicon_io/jinsu-favicon-16x16.png">
+		<style>
+			*{ margin:0; padding:0; font-family:'Nanum Gothic',sans-serif; color:#333; font-size:10px; }
+			.mainBox{
+				width: 120rem; height: 83rem;
+				position: absolute; top: 1rem; left: 50%;
+				background-color: #df3636;
+				transform: translate(-50%, 0%);
+				box-shadow: 0rem 0rem 0.2rem 0.2rem #f9f1e5;
+				border-radius: 1.5rem;
+			}
+			.monitor{
+				width: 115rem; height: 81rem;
+				background-color: #df3636;
+				margin: 2rem 0 0 2.5rem;
+				border-radius: 1rem;
+			}
+			.aBox{
+				width: 115rem; height: 32rem;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-around;
+				text-align: center;
+				line-height: 10rem;
+				border-radius: 1.5rem 1.5rem 0 0;
+			}
+			.topCenter{
+				width: 32rem; height: 36rem;
+				margin-top: 3rem;
+			}
+			.inputBox{
+				width: 25rem; height: 6rem;
+				text-align: center;
+				border-radius: 1.5rem;
+				font-size: 2.5rem;
+				letter-spacing: 0.5rem;
+				box-shadow: 0 0 0.2rem 0.2rem #333;
+				border: 0rem solid #edd600;
+				position: absolute;
+				left: 46rem;
+				z-index: 10;
+			}
+			.printBox{
+				width: 60rem; height: 5rem;
+				font-size: 2rem;
+				border-radius: 1rem;
+				letter-spacing: 0.2rem;
+				word-spacing: 0.2rem;
+				margin-top: 2rem;
+				box-shadow: 0rem 0rem 0.2rem 0.2rem #edd600;
+				border: 0rem solid #606060;
+				display: inline-block;
+				line-height: 5rem;
+			}
+			.cBox{
+				width: 115rem; height: 40rem;
+				display: inline-block;
+				margin-top: 4rem;
+				text-align: center;
+				background-color: #c2ff92;
+				border-radius: 1.5rem;
+			}
+			.cBoxLine{
+				width: 100rem; height: 34rem;
+				border: 0.3rem dashed orange;
+				line-height: 7rem;
+				margin-left: 7rem;
+				margin-top: 2.5rem;
+				border-radius: 1.5rem;
+			}
+			.bottomLeftBox{
+				width: 38rem; height: 36rem;
+				background-color: #df3636;
+				border-radius: 1rem 0 0 1rem;
+			}
+			.moveOutside{
+				width: 26rem; height: 26rem;
+				border-radius: 50%;
+				margin: 4.5rem 0 0 7rem;
+				box-shadow: 0 0 0.3rem 0.3rem #222;
+				background-color: #eee;
+			}
+			.moveBtn1{
+				width: 21rem; height: 7rem;
+				background-color: tomato;
+				position: absolute;
+				top: 16rem; left: 12rem;
+				box-shadow: 0 0 0.2rem 0.3rem #222;
+			}
+			.moveBtn2{
+				width: 7rem; height: 21rem;
+				background-color: tomato;
+				position: absolute;
+				top: 9rem; left: 19rem;
+				box-shadow: 0 0 0.2rem 0.3rem #222;
+			}
+			.moveBox3{
+				width: 8rem; height: 7rem;
+				background-color: tomato;
+				position: absolute;
+				top: 16rem; left: 18.5rem;
+				text-align: center;
+				font-size: 2.5rem;
+				line-height: 7rem;
+				cursor: pointer;
+			}
+			.moveBox3:hover{ color: #111; }
+			.moveBox3:active{ color: #ddc914; }
+			.buttonArrowTop,.buttonArrowLeft,.buttonArrowRight,.buttonArrowBottom{
+				width: 0rem; height: 0rem;
+				border-top: 3rem solid transparent;
+				border-right: 3rem solid transparent;
+				border-bottom: 4rem solid gold;
+				border-left: 3rem solid transparent;
+				position: absolute;
+				top: 7rem; left: 19.5rem;
+			}
+			.buttonArrowLeft{
+				border-bottom: 3rem solid transparent;
+				border-right: 4rem solid gold;
+				top: 16.5rem; left: 10rem;
+			}
+			.buttonArrowRight{
+				border-bottom: 3rem solid transparent;
+				border-left: 4rem solid gold;
+				top: 16.5rem; left: 28rem;
+			}
+			.buttonArrowBottom{
+				border-bottom: 3rem solid transparent;
+				border-top: 4rem solid gold;
+				top: 25rem; left: 19.5rem;
+			}
+			.bottomRightBox{
+				width: 45rem; height: 36rem;
+				background-color: #df3636;
+			}
+			.smallButtonBox{
+				width: 30rem; height: 17rem;
+				position: absolute;
+				top: -8rem; left: 42rem;
+				display: none;
+			}
+			.bottomTextBox{ width: 30rem; height: 12rem; }
+			.infoJinsuText{
+				width: 25rem; height: 8rem;
+				border: 0.3rem dashed #eee;
+				border-radius: 1.5rem;
+				text-align: center;
+				line-height: 8rem;
+				font-size: 3rem;
+				letter-spacing: 0.3rem;
+				margin: 18rem 0 0 4rem;
+				color: white;
+			}
+			.bottomArrowBox{ width: 30rem; height: 15rem; }
+			.midArrow1{
+				width: 20rem; height: 4rem;
+				background-color: #ddc914;
+				position: absolute;
+				top: 24rem; left: 5rem;
+			}
+			.midArrow2{
+				border-top: 4rem solid transparent;
+				border-left: 4rem solid #ddc914;
+				border-right: 4rem solid transparent;
+				border-bottom: 4rem solid transparent;
+				position: absolute;
+				top: 22rem; left: 25rem;
+			}
+			.changeText{
+				text-align: center;
+				font-size: 2.5rem;
+				letter-spacing: 0.2rem;
+				word-spacing: 0.2rem;
+				padding: 1rem 0 1rem 0;
+				border: 0.3rem dashed #ddc914;
+			}
+			.outsideBtn2{
+				width: 17rem; height: 7rem;
+				border-radius: 1.5rem;
+				background-color: #ddc914;
+				margin: 2rem 0 0 6.5em;
+				display: inline-block;
+				cursor: pointer;
+				box-shadow: 0 0 0.2rem 0.2rem #ddc914;
+			}
+			.insideBtn2{
+				width: 16rem; height: 6rem;
+				border-radius: 1.5rem;
+				background-color: tomato;
+				font-size: 2.5rem;
+				line-height: 6rem;
+				margin: 0.5rem 0 0 0.5rem;
+				display: inline-block;
+				box-shadow: 0 0 0.2rem 0.2rem #444;
+				transition: all linear 0.2s;
+				text-align: center;
+				letter-spacing: 0.3rem;
+			}
+			.insideBtn2:hover{ background-color: #e15941; color: #ddc914; }
+			.insideBtn2:active{ box-shadow: 0 0 0.5rem 0.5rem #444; }
+			.buttonBox{	width: 45rem; height: 36rem; }
+			.outsideBtn{
+				width: 13rem; height: 13rem;
+				border-radius: 50%;
+				background-color: #ddc914;
+				display: inline-block;
+				margin: 3rem 0 0 5rem;
+				cursor: pointer;
+				box-shadow: 0 0 0.2rem 0.2rem #ddc914;
+			}
+			.insideBtn{
+				width: 11rem; height: 11rem;
+				border-radius: 50%;
+				background-color: tomato;
+				font-size: 2.5rem;
+				display: inline-block;
+				text-align: center;
+				line-height: 11rem;
+				margin: 1rem 0 0 0rem;
+				box-shadow: 0 0 0.2rem 0.3rem #444;
+				transition: all linear 0.2s;
+			}
+			.insideBtn:hover{ background-color: #e15941; color: #ddc914; }
+			.insideBtn:active{ box-shadow: 0 0 0.5rem 0.5rem #444; }
+			.modalMainBox{
+				width: 30rem; height: 20rem;
+				background-color: white;
+				position: absolute;
+				top: 50%; left: 50%;
+				margin-top: -15rem;
+				margin-left: -15rem;
+				border-radius: 1.5rem;
+				box-shadow: 0 0 0.2rem 0.2rem #444;
+				display: none;
+				z-index: 9;
+			}
+			.modalTop{
+				width: 30rem; height: 5rem;
+				border-bottom: 0.1rem solid #333;
+				text-align: center;
+				font-size: 2rem;
+				line-height: 5rem;
+				padding: 0.2rem 0 0.2rem 0;
+			}
+			.closeBox{
+				width: 2.2rem; height: 2.2rem;
+				position: absolute;
+				top: 0.8rem; left: 26rem;
+				font-size: 1.6rem;
+				text-align: center;
+				line-height: 2.2rem;
+				box-shadow: 0 0 0.1rem 0.1rem #444;
+				cursor: pointer;
+				transition: all linear 0.2s;
+			}
+			.closeBox:hover{ box-shadow: 0 0 0.1rem 0.1rem #777; color: #777}
+			.modalHeadText { font-size: 3rem; letter-spacing: 0.5rem; }
+			.modalMid{ width: 30rem; height: 8.5rem; border-bottom: 0.1rem solid #333; }
+			.modalMidText{
+				text-align: center;
+				font-size: 2.2rem;
+				line-height: 8.5rem;
+				letter-spacing: 0.1rem;
+			}
+			.bottomCloseBox{
+				width: 30rem; height: 5.9rem;
+				background-color: #ededf9;
+				text-align: center;
+				line-height: 6rem;
+				font-size: 2.5rem;
+				border-radius: 0 0 0.75rem 0.75rem;
+				letter-spacing: 0.5rem;
+				border-radius: 0 0 1.5rem 1.5rem;
+				cursor: pointer;
+				transition: all linear 0.2s;
+			}
+			.bottomCloseBox:hover{ background-color: #dfdfeb; }
+			.arrowTwo,.arrowEight,.arrowTen,.arrowSixteen{
+				width: 5rem; height: 5rem;
+				font-size: 2.5rem;
+				text-align: center;
+				line-height: 6rem;
+				position: absolute;
+				cursor: pointer;
+			}
+			.arrowTwo{ top: -0.5rem; left: -2.5rem;	}
+			.arrowEight{ top: -3rem; }
+			.arrowTen{ top: -12.5rem; left: 4.5rem; z-index: 1; }
+			.arrowSixteen{ top: 4rem; left: -12rem; }
+		</style>
+	</head>
+	<body>
+		<main class="mainBox">
+			<section class="monitor">
+				<article class="aBox">
+					<div class="bottomLeftBox">
+						<div class="moveOutside">
+							<div class="moveBtn1"></div>
+							<div class="moveBtn2"></div>
+							<div id="resetBtn" class="moveBox3">RESET</div>
+							<div class="buttonArrowTop">
+								<div id="changeTwo" class="arrowTwo">2</div>
+							</div>
+							<div class="buttonArrowLeft">
+								<div id="changeEight" class="arrowEight">8</div>
+							</div>
+							<div class="buttonArrowBottom">
+								<div id="changeTen" class="arrowTen">10</div>
+							</div>
+							<div class="buttonArrowRight">
+								<div id="changeSixteen" class="arrowSixteen">16</div>
+							</div>
+						</div>
+					</div>
+					<div class="topCenter">
+						<input id="inputNum" class="inputBox" type="text" maxlength="10" placeholder="숫자입력">
+						<div id="smallButtonBox" class="smallButtonBox">
+							<div class="bottomArrowBox">
+								<div class="midArrow1"></div>
+								<div class="midArrow2"></div>
+							</div>
+							<div class="bottomTextBox">
+								<p id="infoJinsuText" class="infoJinsuText"></p>
+							</div>
+						</div>
+					</div>
+					<article class="bottomRightBox">
+						<div class="buttonBox">
+							<div class="outsideBtn outBtn2">
+								<div id="twoJinsuBtn" class="insideBtn">2진수</div>
+							</div>
+							<div class="outsideBtn outBtn3">
+								<div id="eightJinsuBtn" class="insideBtn">8진수</div>
+							</div>
+							<div class="outsideBtn outBtn5">
+								<div id="tenJinsuBtn" class="insideBtn">10진수</div>
+							</div>
+							<div class="outsideBtn outBtn6">
+								<div id="sixteenJinsuBtn" class="insideBtn">16진수</div>
+							</div>
+						</div>
+					</article>
+				</article>
+				<article class="cBox">
+					<div class="cBoxLine">
+						<p id="printTwo" class="printBox">2진수 숫자출력</p>
+						<p id="printEight" class="printBox">8진수 숫자출력</p>
+						<p id="printTen" class="printBox">10진수 숫자출력</p>
+						<p id="printSixteen" class="printBox">16진수 숫자출력</p>
+					</div>
+				</article>
+			</section>
+		</main>
+		<div id="modal" class="modalMainBox">
+			<div class="modalTop">
+				<h1 class="modalHeadText">입력오류</h1>
+				<div id="closeBox" class="closeBox">X</div>
+			</div>
+			<div class="modalMid">
+				<p id="modalMidText" class="modalMidText"></p>
+			</div>
+			<div class="modalBottom">
+				<div id="closeBox2" class="bottomCloseBox">CLOSE</div>
+			</div>
+		</div>
+		<script>
+			class JinsuCal{
+				constructor( num1 ) {
+					this.numValue = num1;
+				}
+				get getThisNumValue() {
+					return this.numValue;
+				}
+				tenToTwo() {
+					let calNum = this.numValue;
+					let printArray = [];
+					if(calNum == "" || calNum.match(/[\D]+/g)){
+						modalControl();
+					} else {
+						while( calNum > 0){
+							if( calNum % 2 < 2 ){
+								printArray.unshift(calNum % 2);
+							}
+							calNum = Math.floor( calNum / 2 )
+						}
+						return printArray;
+					}
+				}
+				tenToEight() {
+					let calNum = this.numValue;
+					let printArray = [];
+					if(calNum == "" || calNum.match(/[\D]+/g)){
+						modalControl();
+					} else {
+						while( calNum > 0 ){
+							if( calNum % 8 < 8 ){
+								printArray.unshift( calNum % 8 );
+							}
+							calNum = Math.floor( calNum / 8 );
+						}
+						return printArray;
+					}
+				}
+				tenToSixteen() {
+					let calNum = this.numValue;
+					let printArray = [];
+					if(calNum == "" || calNum.match(/[\D]+/g)){
+						modalControl();
+					} else {
+						while( calNum > 0 ){
+							if( calNum % 16 < 10 ){
+								printArray.unshift( calNum % 16 );
+							} else if ( calNum % 16 == 10 ){
+								printArray.unshift('a');
+							} else if ( calNum % 16 == 11 ){
+								printArray.unshift('b');
+							} else if ( calNum % 16 == 12 ){
+								printArray.unshift('c');
+							} else if ( calNum % 16 == 13 ){
+								printArray.unshift('d');
+							} else if ( calNum % 16 == 14 ){
+								printArray.unshift('e');
+							} else if ( calNum % 16 == 15 ){
+								printArray.unshift('f');
+							}
+							calNum = Math.floor(calNum / 16);
+						}
+						return printArray;
+					}
+				}
+			}
+			class TwoJinsuCal{
+				constructor( num1 ) {
+					this.numValue = num1;
+				}
+				get getThisNumValue(){
+					return this.numValue;
+				}
+				twoToTen() {
+					let calNum = this.numValue;
+					let copyArray1 = [];
+					let copyArray2 = [];
+					let printArray = [];
+					copyArray1 = [...calNum];
+					let sendNum = 0;
+					let loopCount = copyArray1.length;
+					if(calNum.match(/^[0-1]+$/g)){
+						for(let i=0; i<loopCount; i++){
+							copyArray2.push(copyArray1.pop());
+						}
+						for(let i=0; i<loopCount; i++){
+							printArray.push(copyArray2[i] * (Math.pow(2, i)));
+						}
+						for(let i=0; i<loopCount; i++){
+							sendNum += printArray[i];
+						}
+						return sendNum;
+					} else {
+						modalControl();
+					}
+				}
+			}
+			class EightJinsuCal{
+				constructor( num1 ){
+					this.numValue = num1;
+				}
+				get getThisNumValue(){
+					return this.numValue;
+				}
+				eightToTen() {
+					let calNum = this.numValue;
+					let copyArray1 = [];
+					let copyArray2 = [];
+					let printArray = [];
+					copyArray1 = [...calNum];
+					let sendNum = 0;
+					let loopCount = copyArray1.length;
+					if(calNum.match(/^[0-8]+$/g)){
+						for(let i=0; i<loopCount; i++){
+							copyArray2.push(copyArray1.pop());
+						}
+						for(let i=0; i<loopCount; i++){
+							printArray.push(copyArray2[i] * (Math.pow(8, i)));
+						}
+						for(let i=0; i<loopCount; i++){
+							sendNum += printArray[i];
+						}
+						return sendNum;
+					} else {
+						modalControl();
+					}
+				}
+			}
+			class SixteenJinsuCal{
+				constructor( num1 ){
+					this.numValue = num1;
+				}
+				get getThisNumValue() {
+					return this.numValue;
+				}
+				sixteenToTen() {
+					let calNum = this.numValue;
+					let copyArray1 = [];
+					let copyArray2 = [];
+					let printArray = [];
+					copyArray1 = [...calNum];
+					let sendNum = 0;
+					let loopCount = copyArray1.length;
+					for(let i=0; i<loopCount; i++){
+						if(copyArray1[i] == 'a'){
+							copyArray1.splice(i, 1, 10);
+						} else if(copyArray1[i] == 'b'){
+							copyArray1.splice(i, 1, 11);
+						} else if(copyArray1[i] == 'c'){
+							copyArray1.splice(i, 1, 12);
+						} else if(copyArray1[i] == 'd'){
+							copyArray1.splice(i, 1, 13);
+						} else if(copyArray1[i] == 'e'){
+							copyArray1.splice(i, 1, 14);
+						} else if(copyArray1[i] == 'f'){
+							copyArray1.splice(i, 1, 15);
+						}
+					}
+					if(calNum.match(/^[0-9a-fA-F]+$/g)){
+						for(let i=0; i<loopCount; i++){
+							copyArray2.push(copyArray1.pop());
+						}
+						for(let i=0; i<loopCount; i++){
+							printArray.push(copyArray2[i] * (Math.pow(16, i)));
+						}
+						for(let i=0; i<loopCount; i++){
+							sendNum += printArray[i];
+						}
+						return sendNum;
+					} else {
+						modalControl();
+					}
+				}
+			}
+
+			let modalControl = () => {
+				console.log('modalControl in!!');
+				$("#modalMidText").html("숫자를 입력해주세요.");
+				$("#inputNum").val('');
+				modalOn();
+			};
+			let modalOn = () => {
+				$("#modal").css("display", "block");
+				$("#printTwo").html("2진수 숫자출력");
+				$("#printEight").html("8진수 숫자출력");
+				$("#printTen").html("10진수 숫자출력");
+				$("#printSixteen").html("16진수 숫자출력");
+				console.log('modalOn in!!');
+			};
+			let funcReset = () => {
+				$("#printTwo").html("2진수 숫자출력");
+				$("#printEight").html("8진수 숫자출력");
+				$("#printTen").html("10진수 숫자출력");
+				$("#printSixteen").html("16진수 숫자출력");
+				$("#inputNum").val('');
+				$("#smallButtonBox").css("display", "none");
+			}
+			$("#closeBox").on("click", () => {
+				$("#modal").css("display", "none");
+			});
+			$("#closeBox2").on("click", () => {
+				$("#modal").css("display", "none");
+			});
+			$("#inputNum").off("click").on("click", () => {
+				funcReset();
+			});
+			$("#resetBtn").off("click").on("click", () => {
+				funcReset();
+			});
+			$("#changeTen").off("click").on("click", () => {
+				let mainJinsu = new JinsuCal($("#inputNum").val());
+				$("#smallButtonBox").css("display", "block");
+				$("#infoJinsuText").html("10진수 변환");
+				$("#modal").css("display", "none");
+				$("#twoJinsuBtn").off("click").on("click", () => {
+					$("#printTwo").html(mainJinsu.tenToTwo());
+				});
+				$("#eightJinsuBtn").off("click").on("click", () => {
+					$("#printEight").html(mainJinsu.tenToEight());
+				});
+				$("#tenJinsuBtn").off("click").on("click", () => {
+					if(mainJinsu.getThisNumValue == "" || mainJinsu.getThisNumValue.match(/[\D]+/g)){
+						modalControl();
+					} else {
+						$("#printTen").html(mainJinsu.getThisNumValue);
+					}
+				});
+				$("#sixteenJinsuBtn").off("click").on("click", () => {
+					$("#printSixteen").html(mainJinsu.tenToSixteen());
+				});
+			});
+			$("#changeTwo").off("click").on("click", () => {
+				let twoJinsu = new TwoJinsuCal($("#inputNum").val());
+				$("#smallButtonBox").css("display", "block");
+				$("#infoJinsuText").html("2진수 변환");
+				$("#modal").css("display", "none");
+				$("#twoJinsuBtn").off("click").on("click", () => {
+					if(twoJinsu.getThisNumValue.match(/^[0-1]+$/g)){
+						$("#printTwo").html(twoJinsu.getThisNumValue);
+					} else {
+						modalControl();
+					}
+				});
+				$("#eightJinsuBtn").off("click").on("click", () => {
+					let mainJinsu = new JinsuCal(String(twoJinsu.twoToTen()));
+					$("#printEight").html(mainJinsu.tenToEight());
+				});
+				$("#tenJinsuBtn").off("click").on("click", () => {
+					$("#printTen").html(twoJinsu.twoToTen());
+				});
+				$("#sixteenJinsuBtn").off("click").on("click", () => {
+					let mainJinsu = new JinsuCal(String(twoJinsu.twoToTen()));
+					$("#printSixteen").html(mainJinsu.tenToSixteen());
+				});
+			});
+			$("#changeEight").off("click").on("click", () => {
+				let eightJinsu = new EightJinsuCal($("#inputNum").val());
+				$("#smallButtonBox").css("display", "block");
+				$("#infoJinsuText").html("8진수 변환");
+				$("#modal").css("display", "none");
+				$("#twoJinsuBtn").off("click").on("click", () => {
+					let mainJinsu = new JinsuCal(String(eightJinsu.eightToTen()));
+					$("#printTwo").html(mainJinsu.tenToTwo());
+				});
+				$("#eightJinsuBtn").off("click").on("click", () => {
+					if(eightJinsu.getThisNumValue.match(/^[0-8]+$/)){
+						$("#printEight").html(eightJinsu.getThisNumValue);
+					} else {
+						modalControl();
+					}
+				});
+				$("#tenJinsuBtn").off("click").on("click", () => {
+					$("#printTen").html(eightJinsu.eightToTen());
+				});
+				$("#sixteenJinsuBtn").off("click").on("click", () => {
+					let mainJinsu = new JinsuCal(String(eightJinsu.eightToTen()));
+					$("#printSixteen").html(mainJinsu.tenToSixteen());
+				});
+			});
+			$("#changeSixteen").off("click").on("click", () => {
+				$("#modal").css("display", "none");
+				let sixteenJinsu = new SixteenJinsuCal($("#inputNum").val());
+				$("#smallButtonBox").css("display", "block");
+				$("#infoJinsuText").html("16진수 변환");
+				$("#twoJinsuBtn").off("click").on("click", () => {
+					let mainJinsu = new JinsuCal(String(sixteenJinsu.sixteenToTen()));
+					$("#printTwo").html(mainJinsu.tenToTwo());
+				});
+				$("#eightJinsuBtn").off("click").on("click", () => {
+					let mainJinsu = new JinsuCal(String(sixteenJinsu.sixteenToTen()));
+					$("#printEight").html(mainJinsu.tenToEight());
+				});
+				$("#tenJinsuBtn").off("click").on("click", () => {
+					$("#printTen").html(sixteenJinsu.sixteenToTen());
+				});
+				$("#sixteenJinsuBtn").off("click").on("click", () => {
+					if(sixteenJinsu.getThisNumValue.match(/^[0-9a-fA-F]+$/)){
+						$("#printSixteen").html(sixteenJinsu.getThisNumValue);
+					} else {
+						modalControl();
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
