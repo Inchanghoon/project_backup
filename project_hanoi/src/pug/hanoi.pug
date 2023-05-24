@@ -1,0 +1,55 @@
+doctype html
+html(lang="ko")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="preconnect" href="https://fonts.googleapis.com")
+        link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+        link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Sigmar&display=swap" rel="stylesheet")
+        link(rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png")
+        link(rel="stylesheet" href="../css/hanoi.css")
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js")
+        title HANOI TOWER
+    body 
+        .wrapBox
+            main.mainWrap
+                header.titleBox 
+                    h1 HANOI TOWER
+                section.headWrap 
+                    label(for="insertNum" class="inputText") 1~5까지의 숫자를 입력해주세요 
+                    input(type="number" id="insertNum" name="insertNum" class="insertNum" placeholder="숫자 입력" value="")
+                    .btnWrap 
+                        #selfBtn.clickBtn 직접하기
+                        #clickBtn.clickBtn MAKE RING 
+                        #goBtn.clickBtn 자동 시작
+                    #minCount.minCount Move Count: 0회
+                section.secWrap 
+                    .leftBox 
+                        .cylinderTop 
+                        .cylinderBar 
+                            .circleBox#circleBoxA 
+                        .cylinderBottomCircle 
+                        .cylinderBottom A
+                    .midBox 
+                        .cylinderTop 
+                        .cylinderBar 
+                            .circleBox#circleBoxB 
+                        .cylinderBottomCircle 
+                        .cylinderBottom B
+                    .rightBox 
+                        .cylinderTop 
+                        .cylinderBar 
+                            .circleBox#circleBoxC 
+                        .cylinderBottomCircle 
+                        .cylinderBottom C
+            .displayWrap 
+                .displayInside 
+                    p.progressText#progressText 
+        .modalWrap#modalWrap 
+            .modalTextBox 
+                p.modalText#modalText SUCCESS
+        .modalWrap#modalError 
+            .modalTextBox
+                p.modalErrorText#modalErrorText 링을 만들어주세요
+        script(src="../js/hanoi.js")

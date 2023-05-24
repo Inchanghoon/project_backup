@@ -1,0 +1,360 @@
+* {
+  margin: 0rem;
+  padding: 0rem;
+  color: #333;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 10px;
+  position: relative; }
+
+body {
+  background: #b1f1b1; }
+
+.wrapBox {
+  width: 115rem;
+  height: 74rem;
+  display: flex;
+  margin: 9rem auto;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center; }
+
+.mainWrap {
+  width: 90rem;
+  height: 74rem;
+  border-radius: 1rem;
+  background: #117068; }
+  .mainWrap .titleBox {
+    width: 90rem;
+    height: 10rem; }
+    .mainWrap .titleBox h1 {
+      text-align: center;
+      font-size: 8rem;
+      line-height: 10rem;
+      color: white;
+      font-family: 'Sigmar', cursive;
+      text-shadow: 0.8rem 0.8rem 0.3rem #333; }
+  .mainWrap .headWrap {
+    width: 90rem;
+    height: 25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; }
+    .mainWrap .headWrap .inputText {
+      text-align: center;
+      font-size: 1.6rem;
+      color: white; }
+    .mainWrap .headWrap .insertNum {
+      width: 25rem;
+      height: 4rem;
+      margin: 0 auto;
+      font-size: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 0.1rem 0.1rem #aaa;
+      border: 0;
+      text-align: center; }
+    .mainWrap .headWrap .btnWrap {
+      width: 90rem;
+      height: 8rem;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around; }
+      .mainWrap .headWrap .btnWrap .clickBtn {
+        width: 15rem;
+        height: 2rem;
+        padding: 1.5rem 2.5rem;
+        font-size: 2.6rem;
+        line-height: 2rem;
+        letter-spacing: 0.1rem;
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+        background-color: #e9e9e9;
+        border: none;
+        border-radius: 1.5rem;
+        box-shadow: 0 0.9rem #bbb;
+        margin: 0 auto; }
+    .mainWrap .headWrap .clickBtn:hover {
+      background-color: #d3d3d3; }
+    .mainWrap .headWrap .clickBtn:active {
+      background-color: #3e8e41;
+      box-shadow: 0 0.5rem #666;
+      transform: translateY(0.4rem);
+      color: white; }
+    .mainWrap .headWrap .minCount {
+      width: 25rem;
+      height: 5rem;
+      margin: 0 auto;
+      font-size: 2.5rem;
+      text-align: center;
+      line-height: 5rem;
+      border-radius: 1rem;
+      border: 0.2rem dashed white;
+      color: white;
+      letter-spacing: 0.1rem; }
+  .mainWrap .secWrap {
+    width: 90rem;
+    height: 45rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center; }
+  .mainWrap .leftBox {
+    width: 30rem;
+    height: 45rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+    .mainWrap .leftBox .cylinderTop {
+      width: 2rem;
+      height: 1rem;
+      border-radius: 50%;
+      background: #f6db6d;
+      margin: 0 auto; }
+    .mainWrap .leftBox .cylinderBar {
+      width: 2rem;
+      height: 20rem;
+      background-color: #f6db6d;
+      margin: -0.5rem auto; }
+      .mainWrap .leftBox .cylinderBar .circleBox {
+        width: 25rem;
+        height: 20rem;
+        margin: -1.5rem 0 0 -11.5rem;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: flex-start; }
+        .mainWrap .leftBox .cylinderBar .circleBox .circleA {
+          width: 23rem;
+          height: 3rem;
+          background: red;
+          border-radius: 2rem;
+          font-size: 2.5rem;
+          color: white;
+          text-align: center;
+          line-height: 3rem;
+          margin: 0 auto;
+          animation: moveRing 0.8s ease-out;
+          transition: all linear 0.2s;
+          cursor: grab; }
+        .mainWrap .leftBox .cylinderBar .circleBox .circleA:active {
+          cursor: grabbing; }
+@keyframes moveRing {
+  from {
+    transform: translateY(-20rem); }
+  to {
+    transform: none; } }
+        .mainWrap .leftBox .cylinderBar .circleBox .circle4 {
+          background: orange;
+          width: 20rem; }
+        .mainWrap .leftBox .cylinderBar .circleBox .circle3 {
+          background: #c3c322;
+          width: 17rem; }
+        .mainWrap .leftBox .cylinderBar .circleBox .circle2 {
+          background: blue;
+          width: 14rem; }
+        .mainWrap .leftBox .cylinderBar .circleBox .circle1 {
+          background: purple;
+          width: 11rem; }
+    .mainWrap .leftBox .cylinderBottomCircle {
+      width: 25rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: #f6db6d;
+      margin: -1rem auto; }
+    .mainWrap .leftBox .cylinderBottom {
+      width: 25rem;
+      height: 4rem;
+      background: #f6db6d;
+      font-size: 3rem;
+      line-height: 3rem;
+      text-align: center;
+      margin: 0 auto;
+      border-radius: 0 0 0.5rem 0.5rem; }
+  .mainWrap .midBox {
+    width: 30rem;
+    height: 45rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+    .mainWrap .midBox .cylinderTop {
+      width: 2rem;
+      height: 1rem;
+      border-radius: 50%;
+      background: #f6db6d;
+      margin: 0 auto; }
+    .mainWrap .midBox .cylinderBar {
+      width: 2rem;
+      height: 20rem;
+      background-color: #f6db6d;
+      margin: -0.5rem auto; }
+      .mainWrap .midBox .cylinderBar .circleBox {
+        width: 25rem;
+        height: 20rem;
+        margin: -1.5rem 0 0 -11.5rem;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: flex-start; }
+        .mainWrap .midBox .cylinderBar .circleBox .circleA {
+          width: 23rem;
+          height: 3rem;
+          background: red;
+          border-radius: 2rem;
+          font-size: 2.5rem;
+          color: white;
+          text-align: center;
+          line-height: 3rem;
+          margin: 0 auto;
+          animation: moveRing 0.8s ease-out;
+          transition: all linear 0.2s;
+          cursor: grab; }
+        .mainWrap .midBox .cylinderBar .circleBox .circleA:active {
+          cursor: grabbing; }
+@keyframes moveRing {
+  from {
+    transform: translateY(-20rem); }
+  to {
+    transform: none; } }
+        .mainWrap .midBox .cylinderBar .circleBox .circle4 {
+          background: orange;
+          width: 20rem; }
+        .mainWrap .midBox .cylinderBar .circleBox .circle3 {
+          background: #c3c322;
+          width: 17rem; }
+        .mainWrap .midBox .cylinderBar .circleBox .circle2 {
+          background: blue;
+          width: 14rem; }
+        .mainWrap .midBox .cylinderBar .circleBox .circle1 {
+          background: purple;
+          width: 11rem; }
+    .mainWrap .midBox .cylinderBottomCircle {
+      width: 25rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: #f6db6d;
+      margin: -1rem auto; }
+    .mainWrap .midBox .cylinderBottom {
+      width: 25rem;
+      height: 4rem;
+      background: #f6db6d;
+      font-size: 3rem;
+      line-height: 3rem;
+      text-align: center;
+      margin: 0 auto;
+      border-radius: 0 0 0.5rem 0.5rem; }
+  .mainWrap .rightBox {
+    width: 30rem;
+    height: 45rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+    .mainWrap .rightBox .cylinderTop {
+      width: 2rem;
+      height: 1rem;
+      border-radius: 50%;
+      background: #f6db6d;
+      margin: 0 auto; }
+    .mainWrap .rightBox .cylinderBar {
+      width: 2rem;
+      height: 20rem;
+      background-color: #f6db6d;
+      margin: -0.5rem auto; }
+      .mainWrap .rightBox .cylinderBar .circleBox {
+        width: 25rem;
+        height: 20rem;
+        margin: -1.5rem 0 0 -11.5rem;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: flex-start; }
+        .mainWrap .rightBox .cylinderBar .circleBox .circleA {
+          width: 23rem;
+          height: 3rem;
+          background: red;
+          border-radius: 2rem;
+          font-size: 2.5rem;
+          color: white;
+          text-align: center;
+          line-height: 3rem;
+          margin: 0 auto;
+          animation: moveRing 0.8s ease-out;
+          transition: all linear 0.2s;
+          cursor: grab; }
+        .mainWrap .rightBox .cylinderBar .circleBox .circleA:active {
+          cursor: grabbing; }
+@keyframes moveRing {
+  from {
+    transform: translateY(-20rem); }
+  to {
+    transform: none; } }
+        .mainWrap .rightBox .cylinderBar .circleBox .circle4 {
+          background: orange;
+          width: 20rem; }
+        .mainWrap .rightBox .cylinderBar .circleBox .circle3 {
+          background: #c3c322;
+          width: 17rem; }
+        .mainWrap .rightBox .cylinderBar .circleBox .circle2 {
+          background: blue;
+          width: 14rem; }
+        .mainWrap .rightBox .cylinderBar .circleBox .circle1 {
+          background: purple;
+          width: 11rem; }
+    .mainWrap .rightBox .cylinderBottomCircle {
+      width: 25rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: #f6db6d;
+      margin: -1rem auto; }
+    .mainWrap .rightBox .cylinderBottom {
+      width: 25rem;
+      height: 4rem;
+      background: #f6db6d;
+      font-size: 3rem;
+      line-height: 3rem;
+      text-align: center;
+      margin: 0 auto;
+      border-radius: 0 0 0.5rem 0.5rem; }
+
+.displayWrap {
+  width: 23rem;
+  height: 40rem;
+  background: #eee;
+  display: inline-block;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 0.2rem 0.2rem #117068; }
+  .displayWrap .displayInside {
+    width: 21rem;
+    height: 38rem;
+    margin: 1rem auto;
+    overflow: auto; }
+    .displayWrap .displayInside .progressText {
+      font-size: 1.4rem; }
+
+.modalWrap {
+  width: 100%;
+  height: 100%;
+  background: rgba(240, 240, 240, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center; }
+  .modalWrap .modalTextBox {
+    width: 100%;
+    height: 50%;
+    background: rgba(200, 200, 200, 0.5);
+    box-shadow: 0 0 0.2rem 0.2rem #333; }
+    .modalWrap .modalTextBox .modalText {
+      text-align: center;
+      font-size: 20rem;
+      font-family: 'Sigmar', cursive;
+      line-height: 44rem;
+      color: white;
+      text-shadow: 0.1rem 0.1rem 0.2rem #333, 0 0 1rem blue, 0 0 2rem blue;
+      cursor: pointer; }
+    .modalWrap .modalTextBox .modalErrorText {
+      text-align: center;
+      font-size: 10rem;
+      line-height: 44rem;
+      cursor: pointer;
+      text-shadow: 0.1rem 0.1rem 0.2rem #333; }
+
+/*# sourceMappingURL=hanoi.css.map */
