@@ -1,0 +1,309 @@
+@mixin bothWrapBox{
+    width: 34rem; height: 60rem;
+    background-color: #24a749;
+    border-radius: 0.5rem 0rem 0 0.5rem;
+}
+@mixin smTitle{
+    width: 34rem; height: 6rem;
+    font-size: 3.4rem;
+    text-align: center;
+    line-height: 6rem;
+    color: white;
+    text-shadow: 0.1rem 0.1rem 0.1rem #333;
+}
+@mixin listWrapM{ width: 34rem; height: 49rem; overflow: auto; }
+@mixin checkMusicM{
+    width: 33rem; height: 5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    cursor: pointer;
+    margin: 0 auto;
+}
+@mixin smallPicM{ width: 4rem; height: 4rem; border-radius: 0.5rem; }
+@mixin musicTitleM{
+    width: 20rem; height: 4rem;
+    font-size: 1.8rem;
+    line-height: 4rem;
+    color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-shadow: 0.1rem 0.1rem 0.1rem #333;
+}
+@mixin plusPicM{ 
+    width: 3rem; height: 3rem; cursor: pointer;
+    text-align: center;
+    font-size: 3rem;
+    line-height: 3rem;
+    font-weight: bold;
+    color: orange;
+    text-shadow: 0.1rem 0.1rem 0.1rem #444;
+}
+@mixin timeM{
+    font-size: 1.4rem; color: white;
+    text-shadow: 0.1rem 0.1rem 0.1rem #333;
+}
+*{ 
+    margin: 0; padding: 0; font-size: 10px;
+    font-family: 'Noto Sans KR', sans-serif; color: #333;
+}
+body{ background: #e5e5e5; }
+.musicListWrap::-webkit-scrollbar { display: none; }
+.mainWrap{
+    width: 120rem; height: 75rem; 
+    @media all and (max-width: 76.8rem){
+        width: 41rem; height: 190rem;
+        margin: 0 auto;
+    }
+    @media all and (min-width: 76.8rem){
+        width: 120rem; height: 75rem;
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .headWrap{
+        width: 120rem; height: 10rem;
+        margin-bottom: 3rem;
+        h1{
+            font-size: 10rem;
+            font-family: 'Sigmar', cursive;
+            color: #018f2b;
+            text-align: center;
+            line-height: 8rem;
+            text-shadow: 0.2rem 0.2rem 0.2rem #333;
+            letter-spacing: 0.5rem;
+            word-spacing: 0.5rem;
+        }
+    }
+    @media all and (max-width: 76.8rem){
+        .headWrap{
+            width: 100%; height: 7rem;
+            margin-bottom: 2rem;
+            h1{
+                font-size: 5.5rem;
+                line-height: 7rem;
+            }
+        }
+    }
+    .secWrap{
+        width: 120rem; height: 60rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        box-shadow: 0 0 0.5rem 0.1rem #666;
+        border-radius: 0.5rem;
+        .musicListBox{
+            @include bothWrapBox;
+            .smallTitle{ @include smTitle; }
+            .musicListWrap{ @include listWrapM; }
+        }
+        .arrowWrap{
+            width: 34rem; height: 5rem;
+            text-align: center;
+        }
+        .checkMusic{
+            @include checkMusicM;
+            .smallPic{ @include smallPicM; }
+            .overflowWrap{ width: 20rem; height: 4rem; overflow: hidden; }
+            .musicListTitle{ @include musicTitleM; }
+            .musicListTitle:hover{ 
+                overflow: visible; animation: textFlow 4s linear infinite;
+            }
+            .musicTitle{ @include musicTitleM; }
+            .musicTitle:hover{
+                overflow: visible; animation: textFlow 4s linear infinite;
+            }
+            .plusPic{ @include plusPicM; }
+            .plusPic:active{ opacity: 0.7; }
+            @keyframes textFlow{
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-100%); }
+            }
+        }
+        form{ width: 3.5rem; height: 3.5rem; margin-right: -0.6rem; }
+        .inputBtn{
+            width: 3.5rem; height: 3.5rem;
+            border: 0;
+            background-color: transparent;
+        }
+        .checkMusic:active { opacity: 0.7; }
+        .playListBox{
+            @include bothWrapBox;
+            border-radius: 0 0.5rem 0.5rem 0;
+            .smallTitle{ @include smTitle; }
+            .musicListWrap{ @include listWrapM; }
+        }
+        .secMidWrap{
+            width: 52rem; height: 60rem;
+            background: white;
+            .midPicBox{
+                width: 52rem; height: 38rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                .midPic{
+                    width: 30rem; height: 30rem;
+                    border-radius: 0.5rem;
+                }
+                .emptyPic{
+                    width: 37.45rem; height: 30rem;
+                }
+            }
+            .midTitleBox{
+                width: 52rem; height: 5rem;
+                font-size: 4rem;
+                text-align: center;
+                line-height: 1rem;
+            }
+            .midSingerBox{
+                width: 52rem; height: 4rem;
+                font-size: 2.4rem;
+                text-align: center;
+                line-height: 1rem;
+            }
+            .midPlayBox{
+                width: 52rem; height: 13rem;
+                background: #555;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                .rangeBox{
+                    width: 52rem; height: 3rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    .rangeBarWrap{
+                        width: 40rem; height: 0.5rem;
+                        background: white;
+                        border-radius: 1rem;
+                        border: 0;
+                        cursor: pointer;
+                        .moveRange{
+                            width: 0rem; height: 0.5rem;
+                            background:rgb(0, 205, 60);
+                            border-radius: 1rem;
+                            cursor: pointer;
+                            .moveCircle{
+                                width: 1.5rem; height: 1.5rem;
+                                border-radius: 50%;
+                                background: white;
+                                box-shadow: 0 0 0.1rem 0.1rem #333;
+                                transform: translate(0rem, -0.4rem);
+                                margin-left: -1rem;
+                            }
+                        }
+                    }
+                }
+                .timeWrap{
+                    width: 42rem; height: 2rem;
+                    margin: 0 auto;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    transform: translateY(-1rem);
+                    .startTime{ @include timeM; }
+                    .endTime{ @include timeM; }
+                }
+                .btnWrap{
+                    width: 48rem; height: 6rem;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-around;
+                    align-items: center;
+                    margin: 0 auto;
+                    .controlSongBtn{
+                        width: 6rem; height: 6rem;
+                        text-align: center;
+                        .playAndStop{
+                            font-size: 6rem;
+                            line-height: 5rem;
+                            color: white;
+                            cursor: pointer;
+                            text-shadow: 0.1rem 0.1rem 0.1rem #333
+                        }
+                        .playAndStop:active{ opacity: 0.5; }
+                        .toggleBtn1{ color: gold; }
+                        .toggleBtn2{ color: gold; }
+                        .toggleBtn3{ color: white; }
+                        .toggleBtn4{ color: white; }
+                    }
+                }
+            }
+        }
+    }
+    @media all and (max-width: 76.8rem){
+        .secWrap{
+            width: 98%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 0.5rem 0.1rem #666;
+            border-radius: 0.5rem;
+            margin: 0 auto;
+            .musicListBox{
+                width: 80%; height: 60rem;
+                order: 2;
+                .smallTitle{
+                    width: 100%; height: 6rem;
+                    font-size: 3.4rem;
+                    line-height: 4rem;
+                }
+                .musicListWrap{ width: 100%; height: 80%; }
+            }
+            .arrowWrap{
+                width: 100%; height: 5rem;
+                text-align: center;
+            }
+            .checkMusic{
+                width: 96%; height: 4rem;
+                margin: 0.8rem auto;
+            }
+            .playListBox{
+                width: 80%; height: 60rem;
+                order: 3;
+                .smallTitle{
+                    width: 100%; height: 6rem;
+                    font-size: 3.4rem;
+                    line-height: 4rem;
+                }
+                .musicListWrap{ width: 100%; height: 80%; }
+                .checkMusic{
+                    width: 96%; height: 4rem;
+                    margin: 0.8rem auto;
+                }
+            }
+            .secMidWrap{
+                width: 100%; height: 60rem;
+                order: 1;
+                border-radius: 0.5rem;
+                .midPicBox{ width: 100%; }
+                .midTitleBox{ width: 100%; }
+                .midSingerBox{ width: 100%; }
+                .midPlayBox{
+                    width: 100%; border-radius: 0 0 0.5rem 0.5rem;
+                    .rangeBox{
+                        width: 100%;
+                        .rangeBarWrap{ width: 76%; }
+                    }
+                    .timeWrap{ width: 84%; }
+                    .btnWrap{ width: 90%; }
+                }
+            }
+        }
+    }
+}
+.xiIcon{
+    font-size: 4rem;
+    line-height: 5rem;
+    margin: 0 auto;
+    color: white;
+    cursor: pointer;
+    text-shadow: 0.1rem 0.1rem 0.1rem #333
+}
+.xiIcon:active{ opacity: 0.5; }
+h6{ font-size: 1.6rem; }

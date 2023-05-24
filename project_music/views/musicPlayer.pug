@@ -1,0 +1,543 @@
+doctype html
+html(lang="ko")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        script(src="http://code.jquery.com/jquery-latest.min.js")
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js")
+        link(rel="preconnect" href="https://fonts.googleapis.com")
+        link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+        link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Sigmar&display=swap" rel="stylesheet")
+        link(rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css")
+        link(rel="icon", sizes="16x16", type="image/png", href="./images/favicon-music-16x16.png")
+        link(rel="stylesheet" href="./css/musicPlayer.css")
+        title Music Player
+    body 
+        main.mainWrap 
+            header.headWrap 
+                h1 ICH MUSIC 
+            section.secWrap 
+                .musicListBox 
+                    .smallTitle Music List
+                    ul.musicListWrap#mainMusicList 
+                        -for(let i=0; i<resultV.length; i++)
+                            li.checkMusic#musicPlayList 
+                                img#smallPic.smallPic(src= resultV[i].picAddr alt="musicPic")
+                                .overflowWrap
+                                    p.musicListTitle#musicTitle #{resultV[i].title} - #{resultV[i].singer}
+                                form(action="/addMusic" method="get")
+                                    input#resultNum(type="hidden" name="id" value= resultV[i].num)
+                                    input#resultTitle(type="hidden" name="title" value= resultV[i].title)
+                                    input#resultSinger(type="hidden" name="singer" value= resultV[i].singer)
+                                    input(type="hidden" name="playCount" value= resultV[i].playCount)
+                                    input#resultMusicSrc(type="hidden" name="musicAddr" value= resultV[i].musicAddr)
+                                    input#resultImgSrc(type="hidden" name="picAddr" value= resultV[i].picAddr)
+                                    input#resultPlayTime(type="hidden" name="playTime" value= resultV[i].playTime)
+                                    button(type="submit" class="inputBtn")
+                                        i#plusPic.xi-plus.plusPic 
+                    .arrowWrap 
+                        i.xi-caret-down.xiIcon#xiDownLeft 
+                .secMidWrap 
+                    .midPicBox 
+                        if(playResult.length != 0)
+                            img#midPic.midPic(src= playResult[0].picAddr alt="midPic")
+                        else 
+                            img#midPic.emptyPic(src="./images/emptyPic.png" alt="emptyPic")
+                    if(playResult.length != 0)
+                        #midTitleBox.midTitleBox= playResult[0].title
+                        #midSingerBox.midSingerBox= playResult[0].singer
+                    else 
+                        #midTitleBox.midTitleBox 노래를 선택해주세요
+                        #midSingerBox.midSingerBox 
+                    .midPlayBox 
+                        .rangeBox 
+                            #rangeBarWrap.rangeBarWrap 
+                                #moveRange.moveRange 
+                                    #moveCircle.moveCircle 
+                                    if(playResult.length != 0)
+                                        audio(id="mainAudio" src= playResult[0].musicAddr preload="metadata")
+                                    else 
+                                        audio(id="mainAudio" src="#" preload="metadata")
+                        .timeWrap 
+                            #startTime.startTime 00:00
+                            #endTime.endTime 00:00
+                        .btnWrap 
+                            #shuffleBtn.controlSongBtn 
+                                i.xi-shuffle.xiIcon#xiShuffle 
+                            #backSongBtn.controlSongBtn 
+                                i.xi-backward.xiIcon
+                            #playSongBtn.controlSongBtn  
+                                i#playAndStop.xi-play.playAndStop  
+                            #nextSongBtn.controlSongBtn 
+                                i.xi-forward.xiIcon 
+                            #repeatBtn.controlSongBtn 
+                                i.xi-repeat-one.xiIcon#xiRepeat 
+                .playListBox 
+                    .smallTitle Play List
+                    ul#myMusicListWrap.musicListWrap 
+                        -for(let i=0; i<playResult.length; i++)
+                            li#myPlayList.checkMusic 
+                                img#smallPic.smallPic(src= playResult[i].picAddr alt="musicPic")
+                                .overflowWrap 
+                                    p.musicTitle#musicTitle #{playResult[i].title} - #{playResult[i].singer}
+                                form(action="/deleteMusic" method="get")
+                                    input(type="hidden" name="num" value= playResult[i].num)
+                                    button(type="submit" class="inputBtn")
+                                        i#minusPic.xi-minus.plusPic 
+                    .arrowWrap 
+                        if(playResult.length > 10)
+                            i.xi-caret-down.xiIcon#xiDownRight 
+            h6 교육용 포트폴리오 입니다.
+        script.
+            class MusicPlayer{
+                constructor(title, singer, musicAddr, imageSrc, playTime){
+                    this.musicTitle = title;
+                    this.musicSinger = singer;
+                    this.musicSrc = musicAddr;
+                    this.imgSrc = imageSrc;
+                    this.musicPlayTime = playTime;
+                }
+                get getMusicTitle(){
+                    return this.musicTitle;
+                }
+                get getMusicSinger() {
+                    return this.musicSinger;
+                }
+                get getMusicSrc() {
+                    return this.musicSrc;
+                }
+                get getMusicImgSrc() {
+                    return this.imgSrc;
+                }
+                get getMusicPlayTime() {
+                    return this.musicPlayTime;
+                }
+            }
+            let myMusicList = [];
+            const getTitle = '#{playTitle}'.split(/,/g);
+            const getSinger = '#{playSinger}'.split(/,/g);
+            const getMusicSrc = '#{playMusicAddr}'.split(/,/g);
+            const getPlayTime = '#{playMusicPlayTime}'.split(/,/g);
+            const getImgSrc = '#{playImgSrc}'.split(/,/g);
+            let musicIndex = 0;
+            let playFlag = false;
+            let randomFlag = 3;
+            const mainAudio = document.querySelector('#mainAudio');
+            let countInterval = "";
+            let mainInterval = "";
+            let moveWidth = 0;
+            let mainNum = 0;
+            let sendTime = 0;
+            let sendTitle = "";
+            let sendSinger = "";
+            let sendImg = "";
+            let sendMusic = "";
+            let mainOrMy = true;
+            let barWidth = 0;
+            let checkLength = 0;
+            let mainIndex = 0;
+            let arrowFlagLeft = false;
+            let arrowFlagRight = false;
+            let scrollHeight = 0;
+            let scrollHeight2 = 0;
+
+            for(let i=0; i<#{playResult.length}; i++){
+                myMusicList[i] = new MusicPlayer(getTitle[i], getSinger[i], getMusicSrc[i], getImgSrc[i], getPlayTime[i]);
+            }
+            console.log(myMusicList);
+
+            const playMusicFunc = (title, singer, img, time) => {
+                let endMinutes = Math.floor(time / 60);
+                let endSeconds = time % 60;
+                let currentTime = mainAudio.currentTime;
+                $("#midTitleBox").html(title);
+                $("#midSingerBox").html(singer);
+                $("#midPic").attr("src", img);
+                if(endSeconds < 10){
+                    $("#endTime").html(`0${endMinutes}:0${endSeconds}`);
+                } else {
+                    $("#endTime").html(`0${endMinutes}:${endSeconds}`);
+                }
+                for(let i=0; i<myMusicList.length; i++){
+                    if(i === musicIndex){
+                        $("#myMusicListWrap").children("li").eq(i).children("div").children("p").css("color", "gold");
+                    } else {
+                        $("#myMusicListWrap").children("li").eq(i).children("div").children("p").css("color", "white");
+                    }
+                }
+                for(let i=0; i<$("#mainMusicList").children().length; i++){
+                    $("#mainMusicList").children("li").eq(i).children("div").children("p").css("color", "white");
+                }
+            };
+
+            const mainMusicFunc = (title, singer, img, time) => {
+                let endMinutes = Math.floor(time / 60);
+                let endSeconds = time % 60;
+                let currentTime = mainAudio.currentTime;
+                $("#midTitleBox").html(title);
+                $("#midSingerBox").html(singer);
+                $("#midPic").attr("src", img);
+                if(endSeconds < 10){
+                    $("#endTime").html(`0${endMinutes}:0${endSeconds}`);
+                } else {
+                    $("#endTime").html(`0${endMinutes}:${endSeconds}`);
+                }
+                for(let i=0; i<$("#mainMusicList").children().length; i++){
+                    if(i === mainIndex - 1){
+                        $("#mainMusicList").children("li").eq(i).children("div").children("p").css("color", "gold");
+                        $("#myMusicListWrap").children("li").eq(i).children("div").children("p").css("color", "white");
+                    } else {
+                        $("#mainMusicList").children("li").eq(i).children("div").children("p").css("color", "white");
+                        $("#myMusicListWrap").children("li").eq(i).children("div").children("p").css("color", "white");
+                    }
+                }
+            }
+
+            const musicStart = () => {
+                barWidth = rangeBarWrap.clientWidth;
+                mainAudio.loop = false;
+                $("#playAndStop").attr("class", 'xi-pause playAndStop');
+                let playPromise = mainAudio.play();
+                if (playPromise !== undefined) { 
+                    playPromise.then((_) => {}).catch((error) => {});
+                }
+                let scrollOffset = 50 * musicIndex;
+                $("#myMusicListWrap").animate({scrollTop: scrollOffset}, 400);
+                playFlag = true;
+                $("#xiDownRight").removeClass("xi-caret-down");
+                $("#xiDownRight").addClass("xi-caret-up");
+                arrowFlagRight = true;
+                countInterval = setInterval(musicBarFunc, 1000);
+            }
+
+            const mainMusicStart = () => {
+                barWidth = rangeBarWrap.clientWidth;
+                mainAudio.loop = false;
+                playFlag = true;
+                $("#playAndStop").attr("class", "xi-pause playAndStop");
+                let playPromise = mainAudio.play();
+                if (playPromise !== undefined) { 
+                    playPromise.then((_) => {}).catch((error) => {});
+                }
+                let scrollOffset = 50 * (mainIndex-1);
+                $("#mainMusicList").animate({scrollTop: scrollOffset}, 400);
+                $("#xiDownLeft").removeClass("xi-caret-down");
+                $("#xiDownLeft").addClass("xi-caret-up");
+                arrowFlagLeft = true;
+                mainInterval = setInterval(mainMusicBar, 1000);
+            }
+
+            const musicBarFunc = (e) => {
+                let currentTime = mainAudio.currentTime;
+                let currentMin = Math.floor(currentTime / 60);
+                let currentSec = Math.floor(currentTime % 60);
+                if(currentSec < 10){
+                    $("#startTime").html(`0${currentMin}:0${currentSec}`);
+                } else {
+                    $("#startTime").html(`0${currentMin}:${currentSec}`);
+                }
+                moveWidth = moveWidth + (barWidth / myMusicList[musicIndex].getMusicPlayTime);
+                $("#moveRange").css("width", `${moveWidth}px`);
+                $("#moveCircle").css("transform", `translate(${moveWidth - 3}px, -0.4rem)`)
+                if (myMusicList[musicIndex].getMusicPlayTime < currentTime){
+                    clearInterval(countInterval);
+                    moveWidth = 0;
+                    $("#startTime").html('00:00');
+                    switch( randomFlag ) {
+                        case 1:
+                            console.log('repeat: ' + myMusicList[musicIndex].getMusicTitle);
+                            break;
+                        case 2:
+                            musicIndex = Math.floor((Math.random() * myMusicList.length - 1) + 1);
+                            console.log('random: ' + myMusicList[musicIndex].getMusicTitle);
+                            break;
+                        case 3:
+                            musicIndex == myMusicList.length-1 ? musicIndex = 0 : musicIndex++;
+                            console.log('no-repeat: ' + myMusicList[musicIndex].getMusicTitle);
+                            break;
+                    }
+                    $("#mainAudio").attr("src", myMusicList[musicIndex].getMusicSrc);
+                    playMusicFunc(myMusicList[musicIndex].getMusicTitle, myMusicList[musicIndex].getMusicSinger, myMusicList[musicIndex].getMusicImgSrc, myMusicList[musicIndex].getMusicPlayTime);
+                    musicStart();
+                }
+            }
+
+            const mainMusicBar = e => {
+                let currentTime = mainAudio.currentTime;
+                let currentMin = Math.floor(currentTime / 60);
+                let currentSec = Math.floor(currentTime % 60);
+                if(currentSec < 10){
+                    $("#startTime").html(`0${currentMin}:0${currentSec}`);
+                } else {
+                    $("#startTime").html(`0${currentMin}:${currentSec}`);
+                }
+                moveWidth = moveWidth + (barWidth / sendTime);
+                $("#moveRange").css("width", `${moveWidth}px`);
+                $("#moveCircle").css("transform", `translate(${moveWidth - 3}px, -0.4rem)`)
+                if (sendTime < currentTime){
+                    clearInterval(mainInterval);
+                    $("#startTime").html('00:00');
+                    moveWidth = 0;
+                    switch( randomFlag ) {
+                        case 1:
+                            console.log('repeat: ' + sendTitle);
+                            break;
+                        case 2:
+                            mainIndex = Math.floor((Math.random() * $("#mainMusicList").children().length - 1) + 1);
+                            sendMusic = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultMusicSrc").val();
+                            sendTitle = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultTitle").val();
+                            sendSinger = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultSinger").val();
+                            sendImg = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultImgSrc").val();
+                            sendTime = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultPlayTime").val();
+                            console.log('random: ' + sendTitle);
+                            break;
+                        case 3:
+                            mainIndex == $("#mainMusicList").children().length ? mainIndex = 1 : mainIndex++;
+                            $("#startTime").html('00:00');
+                            sendMusic = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultMusicSrc").val();
+                            sendTitle = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultTitle").val();
+                            sendSinger = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultSinger").val();
+                            sendImg = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultImgSrc").val();
+                            sendTime = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultPlayTime").val();
+                            console.log('no-repeat: ' + sendTitle);
+                            break;
+                    }
+                    $("#mainAudio").attr("src", sendMusic);
+                    mainMusicFunc(sendTitle, sendSinger, sendImg, sendTime);
+                    mainMusicStart();
+                }
+            }
+
+            const pauseMusicFunc = () => {
+                $("#playAndStop").attr("class", 'xi-play playAndStop');
+                mainAudio.pause();
+                playFlag = false;
+                clearInterval(countInterval);
+                clearInterval(mainInterval);
+            }
+            
+            $("#playSongBtn").off("click").on("click", () => {
+                if(playFlag == false) {
+                    if(mainOrMy == true){
+                        playMusicFunc(myMusicList[musicIndex].getMusicTitle, myMusicList[musicIndex].getMusicSinger, myMusicList[musicIndex].getMusicImgSrc, myMusicList[musicIndex].getMusicPlayTime);
+                        musicStart();
+                    } else {
+                        mainMusicFunc(sendTitle, sendSinger, sendImg, sendTime);
+                        mainMusicStart();
+                    }
+                } else {
+                    pauseMusicFunc();
+                }
+            });
+            $("#nextSongBtn").off("click").on("click", () => {
+                $("#startTime").html('00:00');
+                moveWidth = 0;
+                if(mainOrMy == true){
+                    clearInterval(countInterval);
+                    if(randomFlag == 2) {
+                        musicIndex = Math.floor((Math.random() * myMusicList.length - 1) + 1);
+                    } else {
+                        musicIndex == myMusicList.length-1 ? musicIndex = 0 : musicIndex++;
+                    }
+                    $("#mainAudio").attr("src", myMusicList[musicIndex].getMusicSrc);
+                    playMusicFunc(myMusicList[musicIndex].getMusicTitle, myMusicList[musicIndex].getMusicSinger, myMusicList[musicIndex].getMusicImgSrc, myMusicList[musicIndex].getMusicPlayTime);
+                    musicStart();
+                } else {
+                    clearInterval(mainInterval);
+                    if(randomFlag == 2) {
+                        mainIndex = Math.floor((Math.random() * $("#mainMusicList").children().length - 1) + 1);
+                    } else {
+                        mainIndex == $("#mainMusicList").children().length ? mainIndex = 1 : mainIndex++;
+                    }
+                    sendMusic = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultMusicSrc").val();
+                    sendTitle = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultTitle").val();
+                    sendSinger = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultSinger").val();
+                    sendImg = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultImgSrc").val();
+                    sendTime = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultPlayTime").val();
+                    $("#mainAudio").attr("src", sendMusic);
+                    mainMusicFunc(sendTitle, sendSinger, sendImg, sendTime);
+                    mainMusicStart();
+                }
+            });
+            $("#backSongBtn").off("click").on("click", () => {
+                $("#startTime").html('00:00');
+                moveWidth = 0;
+                if(mainOrMy == true){
+                    clearInterval(countInterval);
+                    if(randomFlag == 2){
+                        musicIndex = Math.floor((Math.random() * myMusicList.length - 1) + 1);
+                    } else {
+                        musicIndex == 0 ? musicIndex = myMusicList.length-1 : musicIndex--;
+                    }
+                    $("#mainAudio").attr("src", myMusicList[musicIndex].getMusicSrc);
+                    playMusicFunc(myMusicList[musicIndex].getMusicTitle, myMusicList[musicIndex].getMusicSinger, myMusicList[musicIndex].getMusicImgSrc, myMusicList[musicIndex].getMusicPlayTime);
+                    musicStart();
+                } else {
+                    clearInterval(mainInterval);
+                    if(randomFlag == 2) {
+                        mainIndex = Math.floor((Math.random() * $("#mainMusicList").children().length - 1) + 1);
+                    } else {
+                        mainIndex == $("#mainMusicList").children().length ? mainIndex = 1 : mainIndex--;
+                    }
+                    sendMusic = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultMusicSrc").val();
+                    sendTitle = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultTitle").val();
+                    sendSinger = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultSinger").val();
+                    sendImg = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultImgSrc").val();
+                    sendTime = $(`#mainMusicList > li:nth-child(${mainIndex})`).children("form").children("#resultPlayTime").val();
+                    $("#mainAudio").attr("src", sendMusic);
+                    mainMusicFunc(sendTitle, sendSinger, sendImg, sendTime);
+                    mainMusicStart();
+                }
+            })
+            
+            $("#myPlayList > div > p").off("click").on("click", (e) => {
+                clearInterval(countInterval);
+                clearInterval(mainInterval);
+                mainOrMy = true;
+                $("#startTime").html('00:00');
+                moveWidth = 0;
+                let checkTitle = e.target.innerHTML.split('-');
+                myMusicList.forEach((v,i,a) => {
+                    if(myMusicList[i].getMusicTitle + ' ' == checkTitle[0]){
+                        musicIndex = i;
+                    }
+                });
+                $("#mainAudio").attr("src", myMusicList[musicIndex].getMusicSrc);
+                playMusicFunc(myMusicList[musicIndex].getMusicTitle, myMusicList[musicIndex].getMusicSinger, myMusicList[musicIndex].getMusicImgSrc, myMusicList[musicIndex].getMusicPlayTime);
+                musicStart();
+            });
+            $("#myPlayList > img").off("click").on("click", e => {
+                clearInterval(countInterval);
+                clearInterval(mainInterval);
+                mainOrMy = true;
+                $("#startTime").html('00:00');
+                moveWidth = 0;
+                let checkTitle = $(e.target).next().children("p").html().split('-');
+                myMusicList.forEach((v,i,a) => {
+                    if(myMusicList[i].getMusicTitle + ' ' == checkTitle[0]){
+                        musicIndex = i;
+                    }
+                });
+                $("#mainAudio").attr("src", myMusicList[musicIndex].getMusicSrc);
+                playMusicFunc(myMusicList[musicIndex].getMusicTitle, myMusicList[musicIndex].getMusicSinger, myMusicList[musicIndex].getMusicImgSrc, myMusicList[musicIndex].getMusicPlayTime);
+                musicStart();
+            });
+            $("#musicPlayList > div > p").off("click").on("click", (e) => {
+                clearInterval(mainInterval);
+                clearInterval(countInterval);
+                mainOrMy = false;
+                $("#startTime").html('00:00');
+                moveWidth = 0;
+                mainNum = $(e.target).parent().next("form").children("#resultNum").val();
+                sendTitle = $(e.target).parent().next("form").children("#resultTitle").val();
+                sendSinger = $(e.target).parent().next("form").children("#resultSinger").val();
+                sendImg = $(e.target).parent().next("form").children("#resultImgSrc").val();
+                sendTime = $(e.target).parent().next("form").children("#resultPlayTime").val();
+                sendMusic = $(e.target).parent().next("form").children("#resultMusicSrc").val();
+                $("#mainAudio").attr("src", sendMusic);
+                mainIndex = mainNum;
+                mainMusicFunc(sendTitle, sendSinger, sendImg, sendTime);
+                mainMusicStart();
+            });
+
+            $("#musicPlayList > img").off("click").on("click", (e) => {
+                clearInterval(mainInterval);
+                clearInterval(countInterval);
+                mainOrMy = false;
+                $("#startTime").html('00:00');
+                moveWidth = 0;
+                mainNum = $(e.target).siblings("form").children("#resultNum").val();
+                sendTitle = $(e.target).siblings("form").children("#resultTitle").val();
+                sendSinger = $(e.target).siblings("form").children("#resultSinger").val();
+                sendImg = $(e.target).siblings("form").children("#resultImgSrc").val();
+                sendTime = $(e.target).siblings("form").children("#resultPlayTime").val();
+                sendMusic = $(e.target).siblings("form").children("#resultMusicSrc").val();
+                $("#mainAudio").attr("src", sendMusic);
+                mainIndex = mainNum;
+                mainMusicFunc(sendTitle, sendSinger, sendImg, sendTime);
+                mainMusicStart();
+            });
+
+            $("#shuffleBtn").off("click").on("click", () => {
+                randomFlag = 2;
+                $("#xiRepeat").addClass("toggleBtn3");
+                $("#xiRepeat").removeClass("toggleBtn2");
+                if ( $("#xiShuffle").hasClass("toggleBtn1") ) {
+                    $("#xiShuffle").removeClass("toggleBtn1");
+                    randomFlag = 3;
+                } else {
+                    $("#xiShuffle").removeClass("toggleBtn4");
+                    $("#xiShuffle").addClass("toggleBtn1");
+                }
+            });
+            $("#repeatBtn").off("click").on("click", () => {
+                randomFlag = 1;
+                $("#xiShuffle").addClass("toggleBtn4");
+                $("#xiShuffle").removeClass("toggleBtn1");
+                if ( $("#xiRepeat").hasClass("toggleBtn2") ) {
+                    $("#xiRepeat").removeClass("toggleBtn2");
+                    randomFlag = 3;
+                } else {
+                    $("#xiRepeat").removeClass("toggleBtn3");
+                    $("#xiRepeat").addClass("toggleBtn2");
+                }
+            });
+            $("#rangeBarWrap").on("click", (e) => {
+                barWidth = rangeBarWrap.clientWidth;
+                let offsetMusic = e.offsetX;
+                let musicDuradtion = mainAudio.duration;
+                
+                moveWidth = offsetMusic;
+                if(mainOrMy == true){
+                    mainAudio.currentTime = (offsetMusic / barWidth) * myMusicList[musicIndex].getMusicPlayTime;
+                } else {
+                    mainAudio.currentTime = (offsetMusic / barWidth) * sendTime;
+                }
+            });
+            $("#xiDownLeft").on("click", (e) => {
+                if(arrowFlagLeft == false){
+                    scrollHeight += 500;
+                    $("#mainMusicList").animate({scrollTop: scrollHeight}, 400);
+                    if(scrollHeight > 990){
+                        $("#xiDownLeft").removeClass("xi-caret-down");
+                        $("#xiDownLeft").addClass("xi-caret-up");
+                        arrowFlagLeft = true;
+                    }
+                } else {
+                    scrollHeight -= 500;
+                    $("#mainMusicList").animate({scrollTop: scrollHeight}, 400);
+                    if(scrollHeight == 0){
+                        $("#xiDownLeft").removeClass("xi-caret-up");
+                        $("#xiDownLeft").addClass("xi-caret-down");
+                        arrowFlagLeft = false;
+                    }
+                }
+            });
+            $("#xiDownRight").on("click", () => {
+                if($("#myMusicListWrap").children().length < 10){
+                    checkLength = 10;
+                } else if ($("#myMusicListWrap").children().length > 10 && $("#myMusicListWrap").children().length < 20){
+                    checkLength = 490;
+                } else {
+                    checkLength = 990;
+                }
+                if(arrowFlagRight === false){
+                    scrollHeight2 += 500;
+                    $("#myMusicListWrap").animate({scrollTop: scrollHeight2}, 400);
+                    if(scrollHeight2 > checkLength){
+                        $("#xiDownRight").removeClass("xi-caret-down");
+                        $("#xiDownRight").addClass("xi-caret-up");
+                        arrowFlagRight = true;
+                    }
+                } else {
+                    scrollHeight2 -= 500;
+                    $("#myMusicListWrap").animate({scrollTop: scrollHeight2}, 400);
+                    if(scrollHeight2 < 5){
+                        scrollHeight2 = 0;
+                        $("#xiDownRight").removeClass("xi-caret-up");
+                        $("#xiDownRight").addClass("xi-caret-down");
+                        arrowFlagRight = false;
+                    }
+                }
+            });

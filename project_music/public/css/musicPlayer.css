@@ -1,0 +1,362 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #333; }
+
+body {
+  background: #e5e5e5; }
+
+.musicListWrap::-webkit-scrollbar {
+  display: none; }
+
+.mainWrap {
+  width: 120rem;
+  height: 75rem; }
+  @media all and (max-width: 76.8rem) {
+    .mainWrap {
+      width: 41rem;
+      height: 190rem;
+      margin: 0 auto; } }
+  @media all and (min-width: 76.8rem) {
+    .mainWrap {
+      width: 120rem;
+      height: 75rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); } }
+  .mainWrap .headWrap {
+    width: 120rem;
+    height: 10rem;
+    margin-bottom: 3rem; }
+    .mainWrap .headWrap h1 {
+      font-size: 10rem;
+      font-family: 'Sigmar', cursive;
+      color: #018f2b;
+      text-align: center;
+      line-height: 8rem;
+      text-shadow: 0.2rem 0.2rem 0.2rem #333;
+      letter-spacing: 0.5rem;
+      word-spacing: 0.5rem; }
+  @media all and (max-width: 76.8rem) {
+    .mainWrap .headWrap {
+      width: 100%;
+      height: 7rem;
+      margin-bottom: 2rem; }
+      .mainWrap .headWrap h1 {
+        font-size: 5.5rem;
+        line-height: 7rem; } }
+  .mainWrap .secWrap {
+    width: 120rem;
+    height: 60rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-shadow: 0 0 0.5rem 0.1rem #666;
+    border-radius: 0.5rem; }
+    .mainWrap .secWrap .musicListBox {
+      width: 34rem;
+      height: 60rem;
+      background-color: #24a749;
+      border-radius: 0.5rem 0rem 0 0.5rem; }
+      .mainWrap .secWrap .musicListBox .smallTitle {
+        width: 34rem;
+        height: 6rem;
+        font-size: 3.4rem;
+        text-align: center;
+        line-height: 6rem;
+        color: white;
+        text-shadow: 0.1rem 0.1rem 0.1rem #333; }
+      .mainWrap .secWrap .musicListBox .musicListWrap {
+        width: 34rem;
+        height: 49rem;
+        overflow: auto; }
+    .mainWrap .secWrap .arrowWrap {
+      width: 34rem;
+      height: 5rem;
+      text-align: center; }
+    .mainWrap .secWrap .checkMusic {
+      width: 33rem;
+      height: 5rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      list-style: none;
+      cursor: pointer;
+      margin: 0 auto; }
+      .mainWrap .secWrap .checkMusic .smallPic {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 0.5rem; }
+      .mainWrap .secWrap .checkMusic .overflowWrap {
+        width: 20rem;
+        height: 4rem;
+        overflow: hidden; }
+      .mainWrap .secWrap .checkMusic .musicListTitle {
+        width: 20rem;
+        height: 4rem;
+        font-size: 1.8rem;
+        line-height: 4rem;
+        color: white;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-shadow: 0.1rem 0.1rem 0.1rem #333; }
+      .mainWrap .secWrap .checkMusic .musicListTitle:hover {
+        overflow: visible;
+        animation: textFlow 4s linear infinite; }
+      .mainWrap .secWrap .checkMusic .musicTitle {
+        width: 20rem;
+        height: 4rem;
+        font-size: 1.8rem;
+        line-height: 4rem;
+        color: white;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-shadow: 0.1rem 0.1rem 0.1rem #333; }
+      .mainWrap .secWrap .checkMusic .musicTitle:hover {
+        overflow: visible;
+        animation: textFlow 4s linear infinite; }
+      .mainWrap .secWrap .checkMusic .plusPic {
+        width: 3rem;
+        height: 3rem;
+        cursor: pointer;
+        text-align: center;
+        font-size: 3rem;
+        line-height: 3rem;
+        font-weight: bold;
+        color: orange;
+        text-shadow: 0.1rem 0.1rem 0.1rem #444; }
+      .mainWrap .secWrap .checkMusic .plusPic:active {
+        opacity: 0.7; }
+@keyframes textFlow {
+  0% {
+    transform: translateX(0); }
+  100% {
+    transform: translateX(-100%); } }
+    .mainWrap .secWrap form {
+      width: 3.5rem;
+      height: 3.5rem;
+      margin-right: -0.6rem; }
+    .mainWrap .secWrap .inputBtn {
+      width: 3.5rem;
+      height: 3.5rem;
+      border: 0;
+      background-color: transparent; }
+    .mainWrap .secWrap .checkMusic:active {
+      opacity: 0.7; }
+    .mainWrap .secWrap .playListBox {
+      width: 34rem;
+      height: 60rem;
+      background-color: #24a749;
+      border-radius: 0.5rem 0rem 0 0.5rem;
+      border-radius: 0 0.5rem 0.5rem 0; }
+      .mainWrap .secWrap .playListBox .smallTitle {
+        width: 34rem;
+        height: 6rem;
+        font-size: 3.4rem;
+        text-align: center;
+        line-height: 6rem;
+        color: white;
+        text-shadow: 0.1rem 0.1rem 0.1rem #333; }
+      .mainWrap .secWrap .playListBox .musicListWrap {
+        width: 34rem;
+        height: 49rem;
+        overflow: auto; }
+    .mainWrap .secWrap .secMidWrap {
+      width: 52rem;
+      height: 60rem;
+      background: white; }
+      .mainWrap .secWrap .secMidWrap .midPicBox {
+        width: 52rem;
+        height: 38rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; }
+        .mainWrap .secWrap .secMidWrap .midPicBox .midPic {
+          width: 30rem;
+          height: 30rem;
+          border-radius: 0.5rem; }
+        .mainWrap .secWrap .secMidWrap .midPicBox .emptyPic {
+          width: 37.45rem;
+          height: 30rem; }
+      .mainWrap .secWrap .secMidWrap .midTitleBox {
+        width: 52rem;
+        height: 5rem;
+        font-size: 4rem;
+        text-align: center;
+        line-height: 1rem; }
+      .mainWrap .secWrap .secMidWrap .midSingerBox {
+        width: 52rem;
+        height: 4rem;
+        font-size: 2.4rem;
+        text-align: center;
+        line-height: 1rem; }
+      .mainWrap .secWrap .secMidWrap .midPlayBox {
+        width: 52rem;
+        height: 13rem;
+        background: #555;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around; }
+        .mainWrap .secWrap .secMidWrap .midPlayBox .rangeBox {
+          width: 52rem;
+          height: 3rem;
+          display: flex;
+          align-items: center;
+          justify-content: center; }
+          .mainWrap .secWrap .secMidWrap .midPlayBox .rangeBox .rangeBarWrap {
+            width: 40rem;
+            height: 0.5rem;
+            background: white;
+            border-radius: 1rem;
+            border: 0;
+            cursor: pointer; }
+            .mainWrap .secWrap .secMidWrap .midPlayBox .rangeBox .rangeBarWrap .moveRange {
+              width: 0rem;
+              height: 0.5rem;
+              background: #00cd3c;
+              border-radius: 1rem;
+              cursor: pointer; }
+              .mainWrap .secWrap .secMidWrap .midPlayBox .rangeBox .rangeBarWrap .moveRange .moveCircle {
+                width: 1.5rem;
+                height: 1.5rem;
+                border-radius: 50%;
+                background: white;
+                box-shadow: 0 0 0.1rem 0.1rem #333;
+                transform: translate(0rem, -0.4rem);
+                margin-left: -1rem; }
+        .mainWrap .secWrap .secMidWrap .midPlayBox .timeWrap {
+          width: 42rem;
+          height: 2rem;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          transform: translateY(-1rem); }
+          .mainWrap .secWrap .secMidWrap .midPlayBox .timeWrap .startTime {
+            font-size: 1.4rem;
+            color: white;
+            text-shadow: 0.1rem 0.1rem 0.1rem #333; }
+          .mainWrap .secWrap .secMidWrap .midPlayBox .timeWrap .endTime {
+            font-size: 1.4rem;
+            color: white;
+            text-shadow: 0.1rem 0.1rem 0.1rem #333; }
+        .mainWrap .secWrap .secMidWrap .midPlayBox .btnWrap {
+          width: 48rem;
+          height: 6rem;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          margin: 0 auto; }
+          .mainWrap .secWrap .secMidWrap .midPlayBox .btnWrap .controlSongBtn {
+            width: 6rem;
+            height: 6rem;
+            text-align: center; }
+            .mainWrap .secWrap .secMidWrap .midPlayBox .btnWrap .controlSongBtn .playAndStop {
+              font-size: 6rem;
+              line-height: 5rem;
+              color: white;
+              cursor: pointer;
+              text-shadow: 0.1rem 0.1rem 0.1rem #333; }
+            .mainWrap .secWrap .secMidWrap .midPlayBox .btnWrap .controlSongBtn .playAndStop:active {
+              opacity: 0.5; }
+            .mainWrap .secWrap .secMidWrap .midPlayBox .btnWrap .controlSongBtn .toggleBtn1 {
+              color: gold; }
+            .mainWrap .secWrap .secMidWrap .midPlayBox .btnWrap .controlSongBtn .toggleBtn2 {
+              color: gold; }
+            .mainWrap .secWrap .secMidWrap .midPlayBox .btnWrap .controlSongBtn .toggleBtn3 {
+              color: white; }
+            .mainWrap .secWrap .secMidWrap .midPlayBox .btnWrap .controlSongBtn .toggleBtn4 {
+              color: white; }
+  @media all and (max-width: 76.8rem) {
+    .mainWrap .secWrap {
+      width: 98%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 0 0.5rem 0.1rem #666;
+      border-radius: 0.5rem;
+      margin: 0 auto; }
+      .mainWrap .secWrap .musicListBox {
+        width: 80%;
+        height: 60rem;
+        order: 2; }
+        .mainWrap .secWrap .musicListBox .smallTitle {
+          width: 100%;
+          height: 6rem;
+          font-size: 3.4rem;
+          line-height: 4rem; }
+        .mainWrap .secWrap .musicListBox .musicListWrap {
+          width: 100%;
+          height: 80%; }
+      .mainWrap .secWrap .arrowWrap {
+        width: 100%;
+        height: 5rem;
+        text-align: center; }
+      .mainWrap .secWrap .checkMusic {
+        width: 96%;
+        height: 4rem;
+        margin: 0.8rem auto; }
+      .mainWrap .secWrap .playListBox {
+        width: 80%;
+        height: 60rem;
+        order: 3; }
+        .mainWrap .secWrap .playListBox .smallTitle {
+          width: 100%;
+          height: 6rem;
+          font-size: 3.4rem;
+          line-height: 4rem; }
+        .mainWrap .secWrap .playListBox .musicListWrap {
+          width: 100%;
+          height: 80%; }
+        .mainWrap .secWrap .playListBox .checkMusic {
+          width: 96%;
+          height: 4rem;
+          margin: 0.8rem auto; }
+      .mainWrap .secWrap .secMidWrap {
+        width: 100%;
+        height: 60rem;
+        order: 1;
+        border-radius: 0.5rem; }
+        .mainWrap .secWrap .secMidWrap .midPicBox {
+          width: 100%; }
+        .mainWrap .secWrap .secMidWrap .midTitleBox {
+          width: 100%; }
+        .mainWrap .secWrap .secMidWrap .midSingerBox {
+          width: 100%; }
+        .mainWrap .secWrap .secMidWrap .midPlayBox {
+          width: 100%;
+          border-radius: 0 0 0.5rem 0.5rem; }
+          .mainWrap .secWrap .secMidWrap .midPlayBox .rangeBox {
+            width: 100%; }
+            .mainWrap .secWrap .secMidWrap .midPlayBox .rangeBox .rangeBarWrap {
+              width: 76%; }
+          .mainWrap .secWrap .secMidWrap .midPlayBox .timeWrap {
+            width: 84%; }
+          .mainWrap .secWrap .secMidWrap .midPlayBox .btnWrap {
+            width: 90%; } }
+
+.xiIcon {
+  font-size: 4rem;
+  line-height: 5rem;
+  margin: 0 auto;
+  color: white;
+  cursor: pointer;
+  text-shadow: 0.1rem 0.1rem 0.1rem #333; }
+
+.xiIcon:active {
+  opacity: 0.5; }
+
+h6 {
+  font-size: 1.6rem; }
+
+/*# sourceMappingURL=musicPlayer.css.map */
