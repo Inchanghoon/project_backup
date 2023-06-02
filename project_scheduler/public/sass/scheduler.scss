@@ -1,0 +1,245 @@
+@mixin disFlexCenter {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+@mixin textShadow {
+    text-align: center;
+    text-shadow: 0.1rem 0.1rem 0.1rem #333;
+    color: white;
+}
+*{
+    margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10px; color: #333;
+}
+body{ background-color: #a8d7a4; }  // #18830e
+.mainWrap {
+    width: 120rem; height: 100vh;
+    margin: 0 auto;
+    margin-bottom: 4rem;
+    .headerWrap {
+        width: 120rem; height: 14rem;
+        h1{
+            font-size: 8rem;
+            font-family: 'Sigmar', cursive;
+            text-align: center;
+            line-height: 12rem;
+            color: white;
+            text-shadow: 0.5rem 0.5rem 0.5rem #666;
+            letter-spacing: 0.5rem;
+        }
+    }
+    .secWrap{
+        width: 100%; height: 84%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        //box-shadow: 0 0 0.1rem 0.1rem white;
+        border: 0.1rem solid white;
+        //border-top: 0;
+        border-radius: 0 0 1rem 1rem;
+        background: #c7796b;
+        .designBox1{
+            width: 100%; height: 1rem;
+            @include disFlexCenter;
+            align-items: center;
+            padding-top: 0.7rem;
+            .topCircle{
+                width: 2rem; height: 2rem;
+                background: white;
+                border-radius: 50%;
+                margin-left: -2rem;
+            }
+            .lastCircle{
+                margin-right: -2rem;
+            }
+            .topBar{
+                width: 5rem; height: 7rem;
+                background: transparent;
+                border-radius: 50%;
+                border-top: 1rem solid white;
+                transform: translate(-1rem, 1.4rem)
+            }
+        }
+        .firstWrap{
+            width: 100%; height: 10rem;
+            @include disFlexCenter;
+            margin-bottom: 0;
+            .moveWrap {
+                width: 10rem; height: 100%;
+            }
+            .xiIcon, .atcTextWrap{
+                font-size: 5rem;
+                line-height: 9rem;
+                @include textShadow;
+                letter-spacing: 0.2rem;
+            }
+            .xiIcon:hover{ cursor: pointer; color: #b1d411; }
+            .xiIcon:active{ opacity: 0.6; }
+            .dateWriteWrap{
+                width: 30rem; height: 100%;
+                @include disFlexCenter;
+            }
+            .yearWrap{ justify-content: flex-end; padding-right: 3rem; }
+            .monthWrap{ justify-content: flex-start; padding-left: 3rem; }
+        }
+        .dayWrap{
+            width: 100%; height: 4rem;
+            border-bottom: 0.1rem solid white;
+            @include disFlexCenter;
+            .dayName{
+                width: calc(100% / 7); height: 100%;
+                @include textShadow;
+                font-size: 3rem;
+                line-height: 2.5rem;
+            }
+        }
+        .dateWrapBox{
+            width: 100%; height: 81.6%;
+            background: white;
+            border-radius: 0 0 0.8rem 0.8rem;
+        }
+        .atcWrap{
+            width: 100%; height: 20%;
+            @include disFlexCenter;
+            .dateWrap{
+                width: calc(100% / 7); height: 100%;
+                color: white;
+                text-align: center;
+                border-radius: 0.5rem;
+                cursor: pointer;
+                .choiceDay{
+                    width: 100%; height: 25%;
+                    font-size: 2rem;
+                    text-align: center;
+                    border-radius: 0.5rem 0.5rem 0 0;
+                }
+                .writeTodo{
+                    width: 100%; height: 75%;
+                    font-size: 1.6rem;
+                    overflow: auto;
+                    border-radius: 0 0 0.5rem 0.5rem;
+                    white-space: pre-wrap;
+                    word-break: break-all;
+                }
+                .writeTodo::-webkit-scrollbar { display: none; }
+            }
+            .dateWrap:hover{ background: tomato; }
+            .dateWrap:active{ opacity: 0.6; }
+        }
+    }
+}
+.workBtnWrap{
+    width: 20rem;
+    height: 30rem;
+    position: absolute;
+    left: 1%; top: 30%;
+    border-radius: 0.5rem;
+    background: #166c14;
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 0 0.2rem 0.2rem white;
+    .modalTextWrap{
+        width: 20rem; height: 6rem;
+        .writeThisDay, .btnText{
+            width: 20rem; height: 3rem;
+            @include textShadow;
+            line-height: 3rem;
+            font-size: 2rem;
+            letter-spacing: 0.1rem;
+        }
+    }
+}
+.controllBtn{
+    width: 15rem; height: 4rem;
+    border-radius: 1rem;
+    @include textShadow;
+    line-height: 4rem;
+    font-size: 2rem;
+    box-shadow: 0 0 0.2rem 0.2rem #aaa;
+    letter-spacing: 0.2rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    background: transparent;
+    border: none;
+}
+.controllBtn:hover{ background-color: #0f480d; }
+.controllBtn:active{ opacity: 0.6; }
+.modalBack{
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.3);
+    position: absolute;
+    top: 0%;
+    @include disFlexCenter;
+    display: none;
+    align-items: center;
+    .modalWrap{
+        width: 100%; height: 30rem;
+        border-radius: 1rem;
+        background: rgba(220,220,220,0.3);
+        box-shadow: 0 0 0.4rem 0.4rem #666;
+        form{
+            width: 23%; height: 30rem;
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            .modalBtnWrap{
+                width: 100%; height: 5rem;
+                @include disFlexCenter;
+                justify-content: space-around;
+                button{
+                    height: 5rem;
+                    line-height: 0;
+                    background: #166c14;
+                    box-shadow: 0 0 0.2rem 0.2rem #333;
+                }
+                button:hover{ background-color: #0f480d; }
+            }
+        }
+        .addText{
+            width: 94%; height: 15rem;
+            border: none;
+            resize: none;
+            font-size: 2rem;
+            border-radius: 1rem;
+            padding: 1rem;
+        }
+    }
+}
+.deleteModalWrap{
+    width: 35rem; height: 18rem;
+    background: #d9d9d9;
+    border-radius: 1rem;
+    box-shadow: 0 0 0.2rem 0.2rem white;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    .deleteDateWrap{
+        width: 100%; height: 9rem;
+    }
+    .deleteDate{
+        width: 100%; height: 4rem;
+        font-size: 2rem;
+        color: #333;
+        text-align: center;
+        line-height: 4rem;
+    }
+    .answerWrap{
+        width: 100%; height: 9rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        div{ background: #166c14; }
+    }
+}
+
+

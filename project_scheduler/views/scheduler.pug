@@ -1,0 +1,365 @@
+doctype html
+html(lang="ko")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        script(src="http://code.jquery.com/jquery-latest.min.js")
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js")
+        link(rel="preconnect" href="https://fonts.googleapis.com")
+        link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+        link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Sigmar&display=swap" rel="stylesheet")
+        link(rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css")
+        link(rel="icon", sizes="16x16", type="image/png", href="./images/favicon-calendar.png")
+        link(rel="stylesheet" href="./css/scheduler.css")
+        title SCHEDULER
+    body 
+        main.mainWrap 
+            header.headerWrap     
+                h1 My Scheduler
+            section.secWrap 
+                .designBox1#designBox1 
+                    //-.topCircle 
+                    //-.topBar 
+                    //-.topCircle 
+                    //-.topBar 
+                    //-.topCircle 
+                    //-.topBar 
+                    //-.topCircle 
+                    //-.topBar 
+                    //-.topCircle 
+                    //-.topBar 
+                article.firstWrap
+                    .moveWrap 
+                        i.xi-angle-left.xiIcon#prevBtn 
+                    .yearWrap.dateWriteWrap 
+                        span.atcTextWrap.yearPart#writeYear 2023
+                        span.atcTextWrap.yearPart &nbsp년 
+                    .monthWrap.dateWriteWrap 
+                        span.atcTextWrap.monthPart#writeMonth 5
+                        span.atcTextWrap.monthPart &nbsp월
+                    .moveWrap 
+                        i.xi-angle-right.xiIcon#nextBtn 
+                article.dayWrap 
+                    .dayName(style="color: tomato") 일
+                    .dayName 월
+                    .dayName 화
+                    .dayName 수
+                    .dayName 목
+                    .dayName 금
+                    .dayName(style="color: #009ddd") 토
+                article.dateWrapBox#dateWrapBox 
+        .workBtnWrap#workBtnWrap 
+            .modalTextWrap 
+                #writeThisDay.writeThisDay 
+                p.btnText SCHEDULE
+            #insertBtn.controllBtn 입 력 / 수 정
+            #deleteBtn.controllBtn 삭 제
+            #closeBtn.controllBtn 닫 기
+        .modalBack#modalBack 
+            .modalWrap#modalWrap 
+                form(action="/addSchedule" method="get") 
+                    textarea#addText.addText(name="addSche" cols="30", rows="10" maxlength="250")  
+                    .modalBtnWrap 
+                        button#okBtn.controllBtn(type="button") 확인
+                        button#noBtn.controllBtn(type="button") 취소
+        .deleteModalWrap#deleteModalWrap 
+            .deleteDateWrap 
+                .deleteDate#deleteDate 2023년 5월 30일
+                .deleteDate SCHEDULE을 삭제하시겠습니까?
+            .answerWrap
+                .controllBtn#deleteOk 예
+                .controllBtn#deleteNo 아니오
+        script.
+            // Date객체로 달력과 sql 연동
+            class MakeCalendar {
+                constructor(cYear, cMonth, cDate){
+                    this.calendarYear = cYear;
+                    this.calendarMonth = cMonth;
+                    this.calendarDate = cDate;
+                    // 이번달의 시작 요일
+                    this.monthStartDay = new Date(cYear, cMonth, 1);
+                    // 저번달의 마지막 일
+                    this.monthLastDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+                    if(cYear % 400 == 0){
+                        this.monthLastDay[1] = 29;
+                    } else if (cYear % 100 == 0) {
+                        this.monthLastDay[1] = 28;
+                    } else if (cYear % 4 == 0) {
+                        this.monthLastDay[1] = 29;
+                    }
+                    this.weekCount = Math.ceil((this.monthStartDay.getDay() + this.monthLastDay[cMonth]) / 7);
+                }
+                get getThisYear() {
+                    return this.calendarYear;
+                }
+                get getThisMonth() {
+                    return this.calendarMonth + 1;
+                }
+                get getThisDate() {
+                    return this.calendarDate;
+                }
+                get getThisStartDay() {
+                    return this.monthStartDay.getDay();
+                }
+                get getThisLastDay() {
+                    return this.monthLastDay;
+                }
+                get getThisWeekCount() {
+                    return this.weekCount;
+                }
+            }
+            class SchedulerTable{
+                constructor (id, todo, year, month, day) {
+                    this.scheduleId = id;
+                    this.scheduleTodo = todo;
+                    this.scheduleYear = year;
+                    this.scheduleMonth = month;
+                    this.scheduleDay = day;
+                }
+                get getScheduleId(){
+                    return this.scheduleId;
+                }
+                get getScheduleTodo() {
+                    return this.scheduleTodo.replace(/<br>/ig, '\n');
+                }
+                set setScheduleTodo(changeTodo) {
+                    this.scheduleTodo = changeTodo;
+                }
+                get getScheduleYear() {
+                    return this.scheduleYear;
+                }
+                get getScheduleMonth() {
+                    return this.scheduleMonth;
+                }
+                get getScheduleDay() {
+                    return this.scheduleDay;
+                }
+            }
+            const today = new Date();
+            let year = today.getFullYear();
+            let month = today.getMonth();
+            let date = today.getDate();
+            let makeTag = "";
+            let findToday = today.getMonth() + 1;
+            let findYear = year;
+            let tableClass = [];
+            let tableId = '#{tableId}'.split(/,/g);
+            let tableTodo = '#{tableTodo}'.split(/,/g);
+            let tableYear = '#{tableYear}'.split(/,/g);
+            let tableMonth = '#{tableMonth}'.split(/,/g);
+            let tableDay = '#{tableDay}'.split(/,/g);
+            let sendYear = "";
+            let sendMonth = "";
+            let sendDay = "";
+            let sendId = 0;
+            let checkTag = /[<>&]/ig;
+            let changeGT = /&gt;/ig;
+            let changeLT = /&lt;/ig;
+            let changeAMP = /&amp;/ig;
+            let changeQuot = /&quot;/ig;
+            let makeCalendar = new MakeCalendar(year, month, date);
+            let makeSpring = `<div class="topCircle"></div><div class="topBar"></div>`;
+            let makeCircle = `<div class="topCircle lastCircle"></div>`;
+            
+            for(let i=0; i<23; i++){
+                $("#designBox1").append(makeSpring);
+            }
+            $("#designBox1").append(makeCircle);
+            
+            for(let i=0; i<tableId.length; i++){
+                if(checkTag.test(tableTodo[i])){
+                    tableTodo[i] = tableTodo[i].replace(changeGT, '>');
+                    tableTodo[i] = tableTodo[i].replace(changeLT, '<');
+                    tableTodo[i] = tableTodo[i].replace(changeAMP, '&');
+                    tableTodo[i] = tableTodo[i].replace(changeQuot, '"');
+                }
+                tableClass[i] = new SchedulerTable(tableId[i], tableTodo[i], tableYear[i], tableMonth[i], tableDay[i]);
+            }
+            console.log(tableClass);
+            // 달력 만드는 함수
+            let boxFunc = async (yearF, monthF, dateF) => {
+                $("#dateWrapBox").html("");
+                let calendarDay = 0;
+                let findStart = 0;
+                makeTag = "";
+                makeCalendar = new MakeCalendar(yearF, monthF, dateF);
+                $("#writeYear").html(makeCalendar.getThisYear);
+                $("#writeMonth").html(makeCalendar.getThisMonth);
+                sendYear = makeCalendar.getThisYear;
+                sendMonth = makeCalendar.getThisMonth;
+                for(let i=0; i<makeCalendar.getThisWeekCount; i++){
+                    if (makeCalendar.getThisWeekCount == 6){
+                        makeTag += `<article class="atcWrap" style="height: 16.666%">`;
+                    } else {
+                        makeTag += `<article class="atcWrap">`;
+                    }
+                    for(let j=0; j<7; j++){
+                        makeTag += "<div id='dateWrap' class='dateWrap'>"
+                        if(makeCalendar.getThisStartDay <= findStart && calendarDay < makeCalendar.getThisLastDay[month]){
+                            calendarDay++;
+                            if(makeCalendar.getThisYear == findYear && makeCalendar.getThisMonth == findToday && makeCalendar.getThisDate == calendarDay){
+                                makeTag += `
+                                    <p id="choiceDay${calendarDay}" class="choiceDay" style="background: tomato; color: white">${calendarDay}</p>
+                                    <pre id="writeTodo${calendarDay}" class="writeTodo" style="background: tomato; color: white"></pre>
+                                `;
+                            } else {
+                                makeTag += `
+                                    <p id="choiceDay${calendarDay}" class="choiceDay">${calendarDay}</p>
+                                    <pre id="writeTodo${calendarDay}" class="writeTodo"></pre>
+                                `;
+                            }
+                        }
+                        makeTag += "</div>";
+                        findStart++;
+                    }
+                    makeTag += "</article>";
+                }
+                $("#dateWrapBox").append(makeTag);
+                let insertBR = "";
+                for(let i=0; i<tableClass.length; i++){
+                    if(makeCalendar.getThisYear == tableClass[i].getScheduleYear && makeCalendar.getThisMonth == tableClass[i].getScheduleMonth){
+                        insertBR = tableClass[i].getScheduleTodo;
+                        $(`#writeTodo${tableClass[i].getScheduleDay}`).text($(`#writeTodo${tableClass[i].getScheduleDay}`).text() + insertBR);
+                    }
+                }
+            }
+            boxFunc(year, month, date);
+            $("#writeTodo1").text('');
+            // 페이지 새로고침
+            const refreshPage = () => {
+                for(let i=0; i<100; i++){
+                    location.replace('/');
+                }
+            }
+
+            const funcSendSql = () => {
+                if(tableClass[clickIndex].getScheduleYear == sendYear && tableClass[clickIndex].getScheduleMonth == sendMonth && tableClass[clickIndex].getScheduleDay == sendDay){
+                    //tableClass[clickIndex].getScheduleTodo == clickText){
+                    $.ajax({
+                        url: "/updateSchedule",
+                        data: {sendTodo: $("#addText").val(), sendId: sendId},
+                        method: "GET",
+                        dataType: "json",
+                        success: function(data){
+                            console.log('update in');
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url: "/addSchedule",
+                        data: {sendTodo: $("#addText").val(), sendYear: sendYear, sendMonth: sendMonth, sendDay: sendDay},
+                        method: "GET",
+                        dataType: "json",
+                        success: function(data) {
+                            console.log('insert in');
+                        }
+                    });
+                }
+                $("#modalBack").hide();
+                setTimeout(refreshPage(), 3000);
+            }
+            // 저번달 이동
+            $("#prevBtn").on("click", () => {
+                month--;
+                if ( month == -1){
+                    month = 11;
+                    year--;
+                }
+                boxFunc(year, month, date);
+            });
+            // 다음달 이동
+            $("#nextBtn").on("click", () => {
+                month++;
+                if ( month == 12){
+                    month = 0;
+                    year++;
+                }
+                boxFunc(year, month, date);
+            });
+            let clickText = "";
+            let clickIndex = 0;
+
+            // 달력 눌렀을때 값 가져오기
+            $(document).on("click", ".dateWrapBox > article > div", (e) => {
+                sendId = 0;
+                clickIndex = 0;
+                let clickDay = e.target.id.substring(9);
+                sendDay = clickDay;
+                console.log("clickDay: " + clickDay);
+                if(clickDay == ''){
+                    $("#workBtnWrap").hide();
+                    clickText = "";
+                } else {
+                    clickText = $(`#writeTodo${clickDay}`).text();
+                    $("#addText").val(clickText);
+                    //.substring(0, ($(`#writeTodo${clickDay}`).html().length - 4));
+                    $("#writeThisDay").html(`${sendYear}년 ${sendMonth}월 ${clickDay}일`);
+                    $("#deleteDate").html(`${sendYear}년 ${sendMonth}월 ${clickDay}일`);
+                    $("#workBtnWrap").css("display", "flex");
+                }
+                for(let i=0; i<tableClass.length; i++){
+                    if(tableClass[i].getScheduleYear == sendYear && tableClass[i].getScheduleMonth == sendMonth && clickText == tableClass[i].getScheduleTodo){
+                        sendId = tableClass[i].getScheduleId;
+                        clickIndex = i;
+                    } else if(changeGT.test(clickText)) {
+                        sendId = tableClass[i].getScheduleId;
+                        clickIndex = i;
+                    } else if(changeLT.test(clickText)) {
+                        sendId = tableClass[i].getScheduleId;
+                        clickIndex = i;
+                    } else if(changeAMP.test(clickText)) {
+                        sendId = tableClass[i].getScheduleId;
+                        clickIndex = i;
+                    } else if(changeQuot.test(clickText)) {
+                        sendId = tableClass[i].getScheduleId;
+                        clickIndex = i;
+                    } else if(clickText == '"'){
+                        tableClass[i].setScheduleTodo = '"';
+                        sendId = tableClass[i].getScheduleId;
+                        clickIndex = i;
+                    }
+                }
+                console.log("clickText: " + clickText);
+                console.log("clickTextTable: " + tableClass[clickIndex].getScheduleTodo);
+                console.log('sendId: ' + sendId);
+                console.log('clickIndex: ' + clickIndex);
+            });
+            // 입력 / 수정 버튼
+            $("#insertBtn").on("click", () => {
+                $("#modalBack").css("display", "flex");
+                $("#workBtnWrap").hide();
+            });
+            // 삭제 버튼
+            $("#deleteBtn").on("click", () => {
+                $("#deleteModalWrap").css("display", "flex");
+            });
+            // 삭제확인 OK
+            $("#deleteOk").on("click", () => {
+                $("#deleteModalWrap").hide();
+                $.ajax({
+                    url: "deleteSchedule",
+                    data: {sendId: sendId},
+                    method: "GET",
+                    dataType: "json",
+                    success: function(data){
+                        console.log('delete in');
+                    }
+                });
+                setTimeout(refreshPage(), 2000);
+            });
+            // 삭제확인 NO
+            $("#deleteNo").on("click", () => {
+                $("#deleteModalWrap").hide();
+            })
+            $("#closeBtn").on("click", () => {
+                $("#workBtnWrap").hide();
+            });
+            // insert or update 전송
+            $("#okBtn").on("click", async () => {
+                funcSendSql();
+            });
+
+            $("#noBtn").on("click", () => {
+                $("#modalBack").hide();
+            })
